@@ -463,14 +463,6 @@
       ]
     },
     {
-      "id": "skill:continuous-learning",
-      "family": "skill",
-      "description": "Legacy v1 Stop-hook session pattern extraction skill; prefer continuous-learning-v2 for new installs.",
-      "modules": [
-        "workflow-quality"
-      ]
-    },
-    {
       "id": "skill:eval-harness",
       "family": "skill",
       "description": "Evaluation harness for AI regression testing.",

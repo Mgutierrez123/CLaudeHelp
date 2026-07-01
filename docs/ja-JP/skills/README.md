@@ -37,7 +37,7 @@
 
 ### ワークフロー
 - `tdd-workflow/` - テスト駆動開発ワークフロー
-- `continuous-learning/` - 継続的学習
+- `continuous-learning-v2/` - 継続的学習
 
 ### ドメイン特定
 - `eval-harness/` - 評価ハーネス

@@ -10,13 +10,7 @@
       ],
       "targets": [
         "claude",
-        "claude-project",
-        "cursor",
-        "antigravity",
-        "codebuddy",
-        "joycode",
-        "qwen",
-        "zed"
+        "claude-project"
       ],
       "dependencies": [],
       "defaultInstall": true,
@@ -28,20 +22,12 @@
       "kind": "agents",
       "description": "Agent definitions and project-level agent guidance.",
       "paths": [
-        ".agents",
         "agents",
         "AGENTS.md"
       ],
       "targets": [
         "claude",
-        "claude-project",
-        "cursor",
-        "antigravity",
-        "codex",
-        "codebuddy",
-        "joycode",
-        "qwen",
-        "zed"
+        "claude-project"
       ],
       "dependencies": [],
       "defaultInstall": true,
@@ -59,14 +45,7 @@
       ],
       "targets": [
         "claude",
-        "claude-project",
-        "cursor",
-        "antigravity",
-        "opencode",
-        "codebuddy",
-        "joycode",
-        "qwen",
-        "zed"
+        "claude-project"
       ],
       "dependencies": [],
       "defaultInstall": true,
@@ -84,10 +63,7 @@
       ],
       "targets": [
         "claude",
-        "claude-project",
-        "cursor",
-        "opencode",
-        "codebuddy"
+        "claude-project"
       ],
       "dependencies": [],
       "defaultInstall": true,
@@ -100,28 +76,13 @@
       "description": "Baseline platform configs, package-manager setup, and MCP catalog.",
       "paths": [
         ".claude-plugin",
-        ".codex",
-        ".cursor",
-        ".gemini",
-        ".opencode",
-        ".qwen",
-        ".zed",
         "mcp-configs",
         "scripts/auto-update.js",
         "scripts/setup-package-manager.js"
       ],
       "targets": [
         "claude",
-        "claude-project",
-        "cursor",
-        "antigravity",
-        "codex",
-        "gemini",
-        "opencode",
-        "codebuddy",
-        "joycode",
-        "qwen",
-        "zed"
+        "claude-project"
       ],
       "dependencies": [],
       "defaultInstall": true,
@@ -188,15 +149,7 @@
       ],
       "targets": [
         "claude",
-        "claude-project",
-        "cursor",
-        "antigravity",
-        "codex",
-        "opencode",
-        "codebuddy",
-        "joycode",
-        "qwen",
-        "zed"
+        "claude-project"
       ],
       "dependencies": [
         "rules-core",
@@ -222,15 +175,7 @@
       ],
       "targets": [
         "claude",
-        "claude-project",
-        "cursor",
-        "antigravity",
-        "codex",
-        "opencode",
-        "codebuddy",
-        "joycode",
-        "qwen",
-        "zed"
+        "claude-project"
       ],
       "dependencies": [
         "platform-configs"
@@ -249,9 +194,8 @@
         "skills/ai-regression-testing",
         "skills/configure-ecc",
         "skills/code-tour",
-        "skills/continuous-learning",
         "skills/continuous-learning-v2",
-        "skills/council",
+        "skills-nicho/council",
         "skills/e2e-testing",
         "skills/error-handling",
         "skills/eval-harness",
@@ -268,15 +212,7 @@
       ],
       "targets": [
         "claude",
-        "claude-project",
-        "cursor",
-        "antigravity",
-        "codex",
-        "opencode",
-        "codebuddy",
-        "joycode",
-        "qwen",
-        "zed"
+        "claude-project"
       ],
       "dependencies": [
         "platform-configs"
@@ -298,15 +234,7 @@
       ],
       "targets": [
         "claude",
-        "claude-project",
-        "cursor",
-        "antigravity",
-        "codex",
-        "opencode",
-        "codebuddy",
-        "joycode",
-        "qwen",
-        "zed"
+        "claude-project"
       ],
       "dependencies": [
         "workflow-quality",
@@ -321,33 +249,25 @@
       "kind": "skills",
       "description": "Security review and security-focused framework guidance.",
       "paths": [
-        "skills/defi-amm-security",
+        "skills-nicho/defi-amm-security",
         "skills/django-security",
-        "skills/healthcare-phi-compliance",
-        "skills/hipaa-compliance",
+        "skills-nicho/healthcare-phi-compliance",
+        "skills-nicho/hipaa-compliance",
         "skills/laravel-security",
-        "skills/llm-trading-agent-security",
-        "skills/nodejs-keccak256",
+        "skills-nicho/llm-trading-agent-security",
+        "skills-nicho/nodejs-keccak256",
         "skills/perl-security",
         "skills/quarkus-security",
         "skills/security-review",
         "skills/security-scan",
         "skills/security-bounty-hunter",
         "skills/springboot-security",
-        "skills/evm-token-decimals",
+        "skills-nicho/evm-token-decimals",
         "the-security-guide.md"
       ],
       "targets": [
         "claude",
-        "claude-project",
-        "cursor",
-        "antigravity",
-        "codex",
-        "opencode",
-        "codebuddy",
-        "joycode",
-        "qwen",
-        "zed"
+        "claude-project"
       ],
       "dependencies": [
         "workflow-quality"
@@ -364,23 +284,15 @@
         "skills/deep-research",
         "skills/exa-search",
         "skills/research-ops",
-        "skills/scientific-db-pubmed-database",
-        "skills/scientific-db-uspto-database",
-        "skills/scientific-pkg-gget",
-        "skills/scientific-thinking-literature-review",
-        "skills/scientific-thinking-scholar-evaluation"
+        "skills-nicho/scientific-db-pubmed-database",
+        "skills-nicho/scientific-db-uspto-database",
+        "skills-nicho/scientific-pkg-gget",
+        "skills-nicho/scientific-thinking-literature-review",
+        "skills-nicho/scientific-thinking-scholar-evaluation"
       ],
       "targets": [
         "claude",
-        "claude-project",
-        "cursor",
-        "antigravity",
-        "codex",
-        "opencode",
-        "codebuddy",
-        "joycode",
-        "qwen",
-        "zed"
+        "claude-project"
       ],
       "dependencies": [
         "platform-configs"
@@ -395,27 +307,19 @@
       "description": "Business, writing, market, and investor communication skills.",
       "paths": [
         "skills/article-writing",
-        "skills/brand-voice",
-        "skills/content-engine",
-        "skills/investor-materials",
-        "skills/investor-outreach",
-        "skills/lead-intelligence",
+        "skills-nicho/brand-voice",
+        "skills-nicho/content-engine",
+        "skills-nicho/investor-materials",
+        "skills-nicho/investor-outreach",
+        "skills-nicho/lead-intelligence",
         "skills/product-capability",
-        "skills/social-graph-ranker",
-        "skills/seo",
-        "skills/market-research"
+        "skills-nicho/social-graph-ranker",
+        "skills-nicho/seo",
+        "skills-nicho/market-research"
       ],
       "targets": [
         "claude",
-        "claude-project",
-        "cursor",
-        "antigravity",
-        "codex",
-        "opencode",
-        "codebuddy",
-        "joycode",
-        "qwen",
-        "zed"
+        "claude-project"
       ],
       "dependencies": [
         "platform-configs"
@@ -433,11 +337,11 @@
         "skills/api-connector-builder",
         "skills/connections-optimizer",
         "skills/cost-tracking",
-        "skills/customer-billing-ops",
+        "skills-nicho/customer-billing-ops",
         "skills/dashboard-builder",
         "skills/ecc-tools-cost-audit",
         "skills/email-ops",
-        "skills/finance-billing-ops",
+        "skills-nicho/finance-billing-ops",
         "skills/github-ops",
         "skills/google-workspace-ops",
         "skills/jira-integration",
@@ -450,15 +354,7 @@
       ],
       "targets": [
         "claude",
-        "claude-project",
-        "cursor",
-        "antigravity",
-        "codex",
-        "opencode",
-        "codebuddy",
-        "joycode",
-        "qwen",
-        "zed"
+        "claude-project"
       ],
       "dependencies": [
         "platform-configs"
@@ -472,24 +368,16 @@
       "kind": "skills",
       "description": "Public, non-advisory prediction-market and Itô basket research workflows with gated Itô API access.",
       "paths": [
-        "skills/ito-basket-compare",
-        "skills/ito-data-atlas-agent",
-        "skills/ito-market-intelligence",
-        "skills/ito-trade-planner",
-        "skills/prediction-market-oracle-research",
-        "skills/prediction-market-risk-review"
+        "skills-nicho/ito-basket-compare",
+        "skills-nicho/ito-data-atlas-agent",
+        "skills-nicho/ito-market-intelligence",
+        "skills-nicho/ito-trade-planner",
+        "skills-nicho/prediction-market-oracle-research",
+        "skills-nicho/prediction-market-risk-review"
       ],
       "targets": [
         "claude",
-        "claude-project",
-        "cursor",
-        "antigravity",
-        "codex",
-        "opencode",
-        "codebuddy",
-        "joycode",
-        "qwen",
-        "zed"
+        "claude-project"
       ],
       "dependencies": [
         "research-apis",
@@ -505,20 +393,12 @@
       "kind": "skills",
       "description": "Social publishing and distribution skills.",
       "paths": [
-        "skills/crosspost",
-        "skills/x-api"
+        "skills-nicho/crosspost",
+        "skills-nicho/x-api"
       ],
       "targets": [
         "claude",
-        "claude-project",
-        "cursor",
-        "antigravity",
-        "codex",
-        "opencode",
-        "codebuddy",
-        "joycode",
-        "qwen",
-        "zed"
+        "claude-project"
       ],
       "dependencies": [
         "business-content"
@@ -532,24 +412,17 @@
       "kind": "skills",
       "description": "Media generation, technical explainers, and AI-assisted editing skills.",
       "paths": [
-        "skills/blender-motion-state-inspection",
-        "skills/fal-ai-media",
-        "skills/manim-video",
-        "skills/remotion-video-creation",
+        "skills-nicho/blender-motion-state-inspection",
+        "skills-nicho/fal-ai-media",
+        "skills-nicho/manim-video",
+        "skills-nicho/remotion-video-creation",
         "skills/ui-demo",
-        "skills/video-editing",
-        "skills/videodb"
+        "skills-nicho/video-editing",
+        "skills-nicho/videodb"
       ],
       "targets": [
         "claude",
-        "claude-project",
-        "cursor",
-        "codex",
-        "opencode",
-        "codebuddy",
-        "joycode",
-        "qwen",
-        "zed"
+        "claude-project"
       ],
       "dependencies": [
         "platform-configs"
@@ -572,9 +445,7 @@
       ],
       "targets": [
         "claude",
-        "claude-project",
-        "codex",
-        "opencode"
+        "claude-project"
       ],
       "dependencies": [
         "commands-core",
@@ -598,15 +469,7 @@
       ],
       "targets": [
         "claude",
-        "claude-project",
-        "cursor",
-        "antigravity",
-        "codex",
-        "opencode",
-        "codebuddy",
-        "joycode",
-        "qwen",
-        "zed"
+        "claude-project"
       ],
       "dependencies": [
         "platform-configs"
@@ -635,9 +498,9 @@
         "skills/data-scraper-agent",
         "skills/dynamic-workflow-mode",
         "skills/enterprise-agent-ops",
-        "skills/nanoclaw-repl",
+        "skills-nicho/nanoclaw-repl",
         "skills/prompt-optimizer",
-        "skills/ralphinho-rfc-pipeline",
+        "skills-nicho/ralphinho-rfc-pipeline",
         "skills/regex-vs-llm-structured-text",
         "skills/search-first",
         "skills/team-agent-orchestration",
@@ -646,15 +509,7 @@
       ],
       "targets": [
         "claude",
-        "claude-project",
-        "cursor",
-        "antigravity",
-        "codex",
-        "opencode",
-        "codebuddy",
-        "joycode",
-        "qwen",
-        "zed"
+        "claude-project"
       ],
       "dependencies": [
         "platform-configs"
@@ -668,27 +523,19 @@
       "kind": "skills",
       "description": "Deployment workflows, Docker patterns, and infrastructure skills.",
       "paths": [
-        "skills/cisco-ios-patterns",
+        "skills-nicho/cisco-ios-patterns",
         "skills/deployment-patterns",
         "skills/docker-patterns",
-        "skills/homelab-network-readiness",
-        "skills/homelab-network-setup",
-        "skills/netmiko-ssh-automation",
-        "skills/network-bgp-diagnostics",
-        "skills/network-config-validation",
-        "skills/network-interface-health"
+        "skills-nicho/homelab-network-readiness",
+        "skills-nicho/homelab-network-setup",
+        "skills-nicho/netmiko-ssh-automation",
+        "skills-nicho/network-bgp-diagnostics",
+        "skills-nicho/network-config-validation",
+        "skills-nicho/network-interface-health"
       ],
       "targets": [
         "claude",
-        "claude-project",
-        "cursor",
-        "antigravity",
-        "codex",
-        "opencode",
-        "codebuddy",
-        "joycode",
-        "qwen",
-        "zed"
+        "claude-project"
       ],
       "dependencies": [
         "platform-configs"
@@ -706,15 +553,7 @@
       ],
       "targets": [
         "claude",
-        "claude-project",
-        "cursor",
-        "antigravity",
-        "codex",
-        "opencode",
-        "codebuddy",
-        "joycode",
-        "qwen",
-        "zed"
+        "claude-project"
       ],
       "dependencies": [
         "framework-language",
@@ -732,26 +571,18 @@
       "kind": "skills",
       "description": "Supply chain, logistics, procurement, and manufacturing domain skills.",
       "paths": [
-        "skills/carrier-relationship-management",
-        "skills/customs-trade-compliance",
-        "skills/energy-procurement",
-        "skills/inventory-demand-planning",
-        "skills/logistics-exception-management",
-        "skills/production-scheduling",
-        "skills/quality-nonconformance",
-        "skills/returns-reverse-logistics"
+        "skills-nicho/carrier-relationship-management",
+        "skills-nicho/customs-trade-compliance",
+        "skills-nicho/energy-procurement",
+        "skills-nicho/inventory-demand-planning",
+        "skills-nicho/logistics-exception-management",
+        "skills-nicho/production-scheduling",
+        "skills-nicho/quality-nonconformance",
+        "skills-nicho/returns-reverse-logistics"
       ],
       "targets": [
         "claude",
-        "claude-project",
-        "cursor",
-        "antigravity",
-        "codex",
-        "opencode",
-        "codebuddy",
-        "joycode",
-        "qwen",
-        "zed"
+        "claude-project"
       ],
       "dependencies": [
         "platform-configs"
@@ -766,19 +597,11 @@
       "description": "Document processing, conversion, and translation skills.",
       "paths": [
         "skills/nutrient-document-processing",
-        "skills/visa-doc-translate"
+        "skills-nicho/visa-doc-translate"
       ],
       "targets": [
         "claude",
-        "claude-project",
-        "cursor",
-        "antigravity",
-        "codex",
-        "opencode",
-        "codebuddy",
-        "joycode",
-        "qwen",
-        "zed"
+        "claude-project"
       ],
       "dependencies": [
         "platform-configs"

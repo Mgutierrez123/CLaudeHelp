@@ -46,7 +46,7 @@ head -n 50 large-file.txt
 **Síntoma:** El agente no recuerda el contexto u observaciones previas
 
 **Causas:**
-- Hooks de continuous-learning deshabilitados
+- Hooks de continuous-learning-v2 deshabilitados
 - Archivos de observaciones corruptos
 - Fallos en la detección del proyecto
 

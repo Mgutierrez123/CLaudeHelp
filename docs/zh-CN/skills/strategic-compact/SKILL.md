@@ -137,4 +137,4 @@ origin: ECC
 
 * [长篇指南](https://x.com/affaanmustafa/status/2014040193557471352) — Token 优化部分
 * 记忆持久化钩子 — 用于在压缩后保留状态
-* `continuous-learning` 技能 — 在会话结束前提取模式
+* `continuous-learning-v2` 技能 — 在会话结束前提取模式

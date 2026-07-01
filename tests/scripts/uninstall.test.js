@@ -85,7 +85,7 @@ function runTests() {
     const projectRoot = createTempDir('uninstall-project-');
 
     try {
-      const installStdout = execFileSync('node', [INSTALL_SCRIPT, '--target', 'cursor', 'typescript'], {
+      const installStdout = execFileSync('node', [INSTALL_SCRIPT, '--target', 'claude-project', 'typescript'], {
         cwd: projectRoot,
         env: {
           ...process.env,
@@ -98,12 +98,12 @@ function runTests() {
       assert.ok(installStdout.includes('Done. Install-state written'));
 
       const normalizedProjectRoot = fs.realpathSync(projectRoot);
-      const managedPath = path.join(normalizedProjectRoot, '.cursor', 'hooks.json');
-      const statePath = path.join(normalizedProjectRoot, '.cursor', 'ecc-install-state.json');
-      const unrelatedPath = path.join(normalizedProjectRoot, '.cursor', 'custom-user-note.txt');
+      const managedPath = path.join(normalizedProjectRoot, '.claude', 'skills', 'ecc', 'coding-standards', 'SKILL.md');
+      const statePath = path.join(normalizedProjectRoot, '.claude', 'ecc', 'install-state.json');
+      const unrelatedPath = path.join(normalizedProjectRoot, '.claude', 'custom-user-note.txt');
       fs.writeFileSync(unrelatedPath, 'leave me alone');
 
-      const uninstallResult = run(['--target', 'cursor'], {
+      const uninstallResult = run(['--target', 'claude-project'], {
         cwd: projectRoot,
         homeDir,
       });
@@ -123,10 +123,10 @@ function runTests() {
     const projectRoot = createTempDir('uninstall-project-');
 
     try {
-      const targetRoot = path.join(projectRoot, '.cursor');
+      const targetRoot = path.join(projectRoot, '.claude');
       fs.mkdirSync(targetRoot, { recursive: true });
       const normalizedTargetRoot = fs.realpathSync(targetRoot);
-      const statePath = path.join(normalizedTargetRoot, 'ecc-install-state.json');
+      const statePath = path.join(normalizedTargetRoot, 'ecc', 'install-state.json');
       const copiedPath = path.join(normalizedTargetRoot, 'managed-rule.md');
       const mergedPath = path.join(normalizedTargetRoot, 'hooks.json');
       const removedPath = path.join(normalizedTargetRoot, 'legacy-note.txt');
@@ -139,7 +139,7 @@ function runTests() {
       fs.writeFileSync(unrelatedPath, 'leave me alone');
 
       writeState(statePath, {
-        adapter: { id: 'cursor-project', target: 'cursor', kind: 'project' },
+        adapter: { id: 'claude-project', target: 'claude-project', kind: 'project' },
         targetRoot: normalizedTargetRoot,
         installStatePath: statePath,
         request: {
@@ -197,7 +197,7 @@ function runTests() {
         },
       });
 
-      const uninstallResult = run(['--target', 'cursor'], {
+      const uninstallResult = run(['--target', 'claude-project'], {
         cwd: projectRoot,
         homeDir,
       });
@@ -221,15 +221,15 @@ function runTests() {
     const projectRoot = createTempDir('uninstall-project-');
 
     try {
-      const targetRoot = path.join(projectRoot, '.cursor');
+      const targetRoot = path.join(projectRoot, '.claude');
       fs.mkdirSync(targetRoot, { recursive: true });
       const normalizedTargetRoot = fs.realpathSync(targetRoot);
-      const statePath = path.join(normalizedTargetRoot, 'ecc-install-state.json');
+      const statePath = path.join(normalizedTargetRoot, 'ecc', 'install-state.json');
       const renderedPath = path.join(normalizedTargetRoot, 'generated.md');
       fs.writeFileSync(renderedPath, '# generated\n');
 
       writeState(statePath, {
-        adapter: { id: 'cursor-project', target: 'cursor', kind: 'project' },
+        adapter: { id: 'claude-project', target: 'claude-project', kind: 'project' },
         targetRoot: normalizedTargetRoot,
         installStatePath: statePath,
         request: {
@@ -263,7 +263,7 @@ function runTests() {
         },
       });
 
-      const uninstallResult = run(['--target', 'cursor', '--dry-run', '--json'], {
+      const uninstallResult = run(['--target', 'claude-project', '--dry-run', '--json'], {
         cwd: projectRoot,
         homeDir,
       });

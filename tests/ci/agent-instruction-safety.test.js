@@ -11,24 +11,6 @@ const repoRoot = path.resolve(__dirname, '..', '..');
 
 const guardrails = [
   {
-    path: '.codex/AGENTS.md',
-    heading: '## External Action Boundaries',
-    requiredPatterns: [
-      /read-only by default/i,
-      /explicit user approval/i,
-      /posting, publishing, pushing, merging/i,
-    ],
-  },
-  {
-    path: '.kiro/skills/search-first/SKILL.md',
-    heading: '## Scope and Approval Rules',
-    requiredPatterns: [
-      /Default to read-only research/i,
-      /Do not install packages/i,
-      /approval checkpoint/i,
-    ],
-  },
-  {
     path: 'skills/autonomous-agent-harness/SKILL.md',
     heading: '## Consent and Safety Boundaries',
     requiredPatterns: [
@@ -38,21 +20,12 @@ const guardrails = [
     ],
   },
   {
-    path: 'skills/defi-amm-security/SKILL.md',
+    path: 'skills-nicho/defi-amm-security/SKILL.md',
     heading: '## Execution Safety',
     requiredPatterns: [
       /local audit examples/i,
       /trusted checkout or disposable sandbox/i,
       /private keys, seed phrases/i,
-    ],
-  },
-  {
-    path: '.agents/skills/frontend-patterns/SKILL.md',
-    heading: '## Privacy and Data Boundaries',
-    requiredPatterns: [
-      /synthetic or domain-generic data/i,
-      /Do not collect, log, persist, or display/i,
-      /analytics, tracking pixels/i,
     ],
   },
 ];

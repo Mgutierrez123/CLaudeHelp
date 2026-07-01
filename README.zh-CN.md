@@ -164,7 +164,7 @@ Copy-Item -Recurse rules/typescript "$HOME/.claude/rules/"
 /plugin list ecc@ecc
 ```
 
-**完成！** 你现在可以使用 67 个代理、271 个技能和 92 个命令。
+**完成！** 你现在可以使用 53 个代理、200 个技能和 92 个命令。
 
 ### multi-* 命令需要额外配置
 
@@ -279,7 +279,6 @@ everything-claude-code/
 |   |-- market-research/            # 带来源引用的市场、竞品与投资方研究（新增）
 |   |-- investor-materials/         # 融资路演 PPT、单页摘要、备忘录与财务模型（新增）
 |   |-- investor-outreach/          # 定制化融资触达与跟进（新增）
-|   |-- continuous-learning/        # 从会话中自动提取模式（长文本指南）
 |   |-- continuous-learning-v2/     # 基于本能的学习，附带置信度评分
 |   |-- iterative-retrieval/        # 为子智能体渐进式优化上下文
 |   |-- strategic-compact/          # 手动上下文精简建议（长文本指南）
@@ -449,7 +448,7 @@ everything-claude-code/
 
 ```bash
 /skill-create                    # 分析当前仓库
-/skill-create --instincts        # 还为 continuous-learning 生成直觉
+/skill-create --instincts        # 还为 continuous-learning-v2 生成直觉
 ```
 
 这在本地分析你的 git 历史并生成 SKILL.md 文件。

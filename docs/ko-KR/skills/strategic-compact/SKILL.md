@@ -102,4 +102,4 @@ origin: ECC
 
 - [The Longform Guide](https://x.com/affaanmustafa/status/2014040193557471352) -- 토큰 최적화 섹션
 - 메모리 영속성 Hook -- 컴팩션에서 살아남는 상태를 위해
-- `continuous-learning` 스킬 -- 세션 종료 전 패턴 추출
+- `continuous-learning-v2` 스킬 -- 세션 종료 전 패턴 추출

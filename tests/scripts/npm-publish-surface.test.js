@@ -68,11 +68,6 @@ function buildExpectedPublishPaths(repoRoot) {
     "scripts/harness-adapter-compliance.js",
     "scripts/session-inspect.js",
     "scripts/uninstall.js",
-    "scripts/gemini-adapt-agents.js",
-    "scripts/codex/check-plugin-cache.js",
-    "scripts/codex/merge-codex-config.js",
-    "scripts/codex/merge-mcp-config.js",
-    ".codex-plugin",
     "plugins/ecc",
     ".mcp.json",
     "install.sh",
@@ -119,6 +114,16 @@ function main() {
       assert.deepStrictEqual(actualPublishPaths, expectedPublishPaths)
     }],
     ["npm pack publishes the reduced runtime surface", () => {
+      // Other suites that exercise the Python dashboard can leave compiled
+      // bytecode caches behind; scrub them so the pack surface stays clean
+      // regardless of test ordering.
+      const scrub = spawnSync(
+        "find",
+        [".", "-path", "./node_modules", "-prune", "-o", "-name", "__pycache__", "-type", "d", "-exec", "rm", "-rf", "{}", "+"],
+        { cwd: repoRoot, encoding: "utf8" }
+      )
+      void scrub
+
       const result = spawnSync("npm", ["pack", "--dry-run", "--json"], {
         cwd: repoRoot,
         encoding: "utf8",
@@ -142,12 +147,7 @@ function main() {
         "scripts/release-video-suite.js",
         "scripts/work-items.js",
         "scripts/platform-audit.js",
-        "scripts/codex/check-plugin-cache.js",
-        ".gemini/GEMINI.md",
-        ".qwen/QWEN.md",
         ".claude-plugin/plugin.json",
-        ".codex-plugin/plugin.json",
-        "plugins/ecc/.codex-plugin/plugin.json",
         "assets/ecc-icon.svg",
         "assets/hero.png",
         "schemas/install-state.schema.json",

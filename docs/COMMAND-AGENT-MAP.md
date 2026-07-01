@@ -27,7 +27,7 @@ This document lists each slash command and the primary agent(s) or skills it inv
 | `/multi-backend` | architect | Backend multi-service |
 | `/multi-frontend` | architect | Frontend multi-service |
 | `/multi-workflow` | architect | General multi-service |
-| `/learn` | — | continuous-learning skill, instincts |
+| `/learn` | — | continuous-learning-v2 skill, instincts |
 | `/learn-eval` | — | continuous-learning-v2, evaluate then save |
 | `/instinct-status` | — | continuous-learning-v2 |
 | `/instinct-import` | — | continuous-learning-v2 |

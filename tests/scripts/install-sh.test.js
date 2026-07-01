@@ -72,7 +72,7 @@ function runTests() {
     const projectDir = createTempDir('install-sh-project-');
 
     try {
-      const result = run(['--target', 'cursor', '--dry-run', 'typescript'], {
+      const result = run(['--target', 'claude-project', '--dry-run', 'typescript'], {
         cwd: projectDir,
         homeDir,
       });

@@ -544,7 +544,6 @@ ECC/
 |   |-- market-research/            # Investigación de mercado, competidores e inversores con fuentes (NUEVO)
 |   |-- investor-materials/         # Pitch decks, one-pagers, memos y modelos financieros (NUEVO)
 |   |-- investor-outreach/          # Alcance personalizado de fundraising y seguimiento (NUEVO)
-|   |-- continuous-learning/        # Patrón legado v1 de extracción con hook Stop
 |   |-- continuous-learning-v2/     # Aprendizaje basado en instintos con puntuación de confianza
 |   |-- iterative-retrieval/        # Refinamiento progresivo de contexto para subagentes
 |   |-- strategic-compact/          # Sugerencias de compactación manual (Guía Extensa)
@@ -647,8 +646,7 @@ El sistema de aprendizaje basado en instintos aprende tus patrones automáticame
 /evolve                 # Agrupar instintos relacionados en skills
 ```
 
-Consulta `skills/continuous-learning-v2/` para la documentación completa.
-Mantén `continuous-learning/` solo cuando quieras explícitamente el flujo legado v1 de skills aprendidas con hook Stop.
+Consulta `skills/continuous-learning-v2/` para la documentación completa. El flujo legado v1 de skills aprendidas con hook Stop (`continuous-learning/`) se consolidó en v2.
 
 ---
 

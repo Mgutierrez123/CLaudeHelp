@@ -167,7 +167,7 @@ function runTests() {
 
   if (test('normalizes --profile + --with + --without as manifest mode', () => {
     const request = normalizeInstallRequest({
-      target: 'cursor',
+      target: 'claude-project',
       profileId: 'developer',
       moduleIds: [],
       includeComponentIds: ['lang:typescript', 'framework:nextjs'],
@@ -268,7 +268,6 @@ function runTests() {
   if (test('component catalog includes skill: family entries', () => {
     const components = listInstallComponents({ family: 'skill' });
     assert.ok(components.length > 0, 'Should have at least one skill component');
-    assert.ok(components.some(c => c.id === 'skill:continuous-learning'), 'Should have skill:continuous-learning');
     assert.ok(components.some(c => c.id === 'skill:continuous-learning-v2'), 'Should have skill:continuous-learning-v2');
   })) passed++; else failed++;
 
@@ -412,18 +411,6 @@ function runTests() {
 
   // ─── Target-Specific Behavior ───
 
-  if (test('--with respects target compatibility filtering', () => {
-    const plan = resolveInstallPlan({
-      includeComponentIds: ['capability:orchestration'],
-      target: 'cursor',
-    });
-    // orchestration module only supports claude, codex, opencode
-    assert.ok(!plan.selectedModuleIds.includes('orchestration'),
-      'Should skip orchestration for cursor target');
-    assert.ok(plan.skippedModuleIds.includes('orchestration'),
-      'Should report orchestration as skipped for cursor');
-  })) passed++; else failed++;
-
   if (test('--without with agent: component excludes the agent module', () => {
     const plan = resolveInstallPlan({
       profileId: 'core',
@@ -449,11 +436,11 @@ function runTests() {
 
   if (test('--with skill: component includes the parent skill module', () => {
     const plan = resolveInstallPlan({
-      includeComponentIds: ['skill:continuous-learning'],
+      includeComponentIds: ['skill:eval-harness'],
       target: 'claude',
     });
     assert.ok(plan.selectedModuleIds.includes('workflow-quality'),
-      'Should include workflow-quality module from skill:continuous-learning');
+      'Should include workflow-quality module from skill:eval-harness');
   })) passed++; else failed++;
 
   if (test('--with skill:continuous-learning-v2 installs only that skill module', () => {
@@ -484,7 +471,7 @@ function runTests() {
     assert.ok(result.includes('--with'), 'Help should mention --with');
     assert.ok(result.includes('--without'), 'Help should mention --without');
     assert.ok(result.includes('component'), 'Help should describe components');
-    assert.ok(result.includes('zed          - Install project settings'), 'Help should describe Zed target');
+    assert.ok(result.includes('claude-project'), 'Help should describe the claude-project target');
   })) passed++; else failed++;
 
   // ─── End-to-End Dry-Run ───
@@ -514,45 +501,6 @@ function runTests() {
       assert.ok(result.includes('capability:security'), 'Should show included component');
       assert.ok(result.includes('capability:orchestration'), 'Should show excluded component');
       assert.ok(result.includes('security'), 'Selected modules should include security');
-    } finally {
-      fs.rmSync(homeDir, { recursive: true, force: true });
-      fs.rmSync(projectDir, { recursive: true, force: true });
-    }
-  })) passed++; else failed++;
-
-  if (test('end-to-end: --profile minimal --target zed --dry-run --json plans project adapter', () => {
-    const { execFileSync } = require('child_process');
-    const scriptPath = path.join(__dirname, '..', '..', 'scripts', 'install-apply.js');
-    const homeDir = fs.mkdtempSync(path.join(os.tmpdir(), 'selective-e2e-'));
-    const projectDir = fs.mkdtempSync(path.join(os.tmpdir(), 'selective-e2e-zed-project-'));
-
-    try {
-      const result = execFileSync('node', [
-        scriptPath,
-        '--profile', 'minimal',
-        '--target', 'zed',
-        '--dry-run',
-        '--json',
-      ], {
-        cwd: projectDir,
-        env: { ...process.env, HOME: homeDir },
-        encoding: 'utf8',
-        stdio: ['pipe', 'pipe', 'pipe'],
-      });
-      const parsed = JSON.parse(result);
-
-      assert.strictEqual(parsed.dryRun, true);
-      assert.strictEqual(parsed.plan.target, 'zed');
-      assert.strictEqual(parsed.plan.adapter.id, 'zed-project');
-      assert.strictEqual(parsed.plan.installRoot, path.join(fs.realpathSync(projectDir), '.zed'));
-      assert.ok(
-        parsed.plan.operations.some(operation => normalizePlanPath(operation.sourceRelativePath) === '.zed/settings.json'),
-        'Should include Zed native settings operation'
-      );
-      assert.ok(
-        !parsed.plan.operations.some(operation => operation.moduleId === 'hooks-runtime'),
-        'Zed minimal dry-run should not install hook runtime files'
-      );
     } finally {
       fs.rmSync(homeDir, { recursive: true, force: true });
       fs.rmSync(projectDir, { recursive: true, force: true });

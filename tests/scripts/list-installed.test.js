@@ -96,10 +96,10 @@ function runTests() {
     const projectRoot = createTempDir('list-installed-project-');
 
     try {
-      const statePath = path.join(projectRoot, '.cursor', 'ecc-install-state.json');
+      const statePath = path.join(projectRoot, '.claude', 'ecc', 'install-state.json');
       writeState(statePath, {
-        adapter: { id: 'cursor-project', target: 'cursor', kind: 'project' },
-        targetRoot: path.join(projectRoot, '.cursor'),
+        adapter: { id: 'claude-project', target: 'claude-project', kind: 'project' },
+        targetRoot: path.join(projectRoot, '.claude'),
         installStatePath: statePath,
         request: {
           profile: 'core',
@@ -124,7 +124,7 @@ function runTests() {
 
       const parsed = JSON.parse(result.stdout);
       assert.strictEqual(parsed.records.length, 1);
-      assert.strictEqual(parsed.records[0].state.target.id, 'cursor-project');
+      assert.strictEqual(parsed.records[0].state.target.id, 'claude-project');
       assert.strictEqual(parsed.records[0].state.request.profile, 'core');
     } finally {
       cleanup(homeDir);

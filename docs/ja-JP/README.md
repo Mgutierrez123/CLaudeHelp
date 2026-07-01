@@ -211,7 +211,6 @@ everything-claude-code/
 |   |-- coding-standards/           # 言語ベストプラクティス
 |   |-- backend-patterns/           # API、データベース、キャッシュパターン
 |   |-- frontend-patterns/          # React、Next.js パターン
-|   |-- continuous-learning/        # セッションからパターンを自動抽出（長文ガイド）
 |   |-- continuous-learning-v2/     # 信頼度スコア付き直感ベース学習
 |   |-- iterative-retrieval/        # サブエージェント用の段階的コンテキスト精製
 |   |-- strategic-compact/          # 手動圧縮提案（長文ガイド）

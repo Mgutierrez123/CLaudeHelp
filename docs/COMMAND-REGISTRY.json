@@ -495,9 +495,7 @@
       "type": "testing",
       "primaryAgents": [],
       "allAgents": [],
-      "skills": [
-        "marketing-campaign"
-      ],
+      "skills": [],
       "path": "commands/marketing-campaign.md"
     },
     {

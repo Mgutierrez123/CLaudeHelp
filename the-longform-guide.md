@@ -94,7 +94,7 @@ If you've had to repeat a prompt multiple times and Claude ran into the same pro
 
 **The Solution:** When Claude Code discovers something that isn't trivial - a debugging technique, a workaround, some project-specific pattern - it saves that knowledge as a new skill. Next time a similar problem comes up, the skill gets loaded automatically.
 
-I've built a continuous learning skill that does this: `github.com/affaan-m/everything-claude-code/tree/main/skills/continuous-learning`
+I've built a continuous learning skill that does this: `github.com/affaan-m/everything-claude-code/tree/main/skills/continuous-learning-v2`
 
 **Why Stop Hook (Not UserPromptSubmit):**
 
@@ -327,7 +327,7 @@ alias q='cd ~/Desktop/projects'
 
 **Self-Improving Memory:**
 
-- See `skills/continuous-learning/` in this repo
+- See `skills/continuous-learning-v2/` in this repo
 - rlancemartin.github.io/2025/12/01/claude_diary/ - Session reflection pattern
 
 **System Prompts Reference:**

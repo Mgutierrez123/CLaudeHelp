@@ -95,7 +95,7 @@ alias claude-research='claude --system-prompt "$(cat ~/.claude/contexts/research
 
 **解决方案：** 当 Claude Code 发现一些不平凡的事情时——调试技巧、变通方法、某些项目特定的模式——它会将该知识保存为一个新技能。下次出现类似问题时，该技能会自动加载。
 
-我构建了一个实现此功能的持续学习技能：`github.com/affaan-m/everything-claude-code/tree/main/skills/continuous-learning`
+我构建了一个实现此功能的持续学习技能：`github.com/affaan-m/everything-claude-code/tree/main/skills/continuous-learning-v2`
 
 **为什么用 Stop 钩子（而不是 UserPromptSubmit）：**
 
@@ -331,7 +331,7 @@ alias q='cd ~/Desktop/projects'
 
 **自我改进记忆：**
 
-* 请参阅本仓库中的 `skills/continuous-learning/`
+* 请参阅本仓库中的 `skills/continuous-learning-v2/`
 * rlancemartin.github.io/2025/12/01/claude\_diary/ - 会话反思模式
 
 **系统提示词参考：**

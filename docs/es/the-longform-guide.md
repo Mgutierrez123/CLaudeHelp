@@ -94,7 +94,7 @@ Si has tenido que repetir un prompt varias veces y Claude se encontró con el mi
 
 **La Solución:** Cuando Claude Code descubre algo que no es trivial — una técnica de depuración, una solución alternativa, algún patrón específico del proyecto — guarda ese conocimiento como una nueva skill. La próxima vez que aparezca un problema similar, la skill se carga automáticamente.
 
-He construido una skill de aprendizaje continuo que hace esto: `github.com/affaan-m/everything-claude-code/tree/main/skills/continuous-learning`
+He construido una skill de aprendizaje continuo que hace esto: `github.com/affaan-m/everything-claude-code/tree/main/skills/continuous-learning-v2`
 
 **Por Qué Hook Stop (No UserPromptSubmit):**
 
@@ -327,7 +327,7 @@ alias q='cd ~/Desktop/projects'
 
 **Memoria Auto-Mejorable:**
 
-- Ver `skills/continuous-learning/` en este repositorio
+- Ver `skills/continuous-learning-v2/` en este repositorio
 - rlancemartin.github.io/2025/12/01/claude_diary/ — Patrón de reflexión de sesión
 
 **Referencia de System Prompts:**

@@ -163,14 +163,14 @@ function runTests() {
   })) passed++; else failed++;
 
   if (test('filters recommendations by target and limit', () => {
-    const result = run(['operator', 'workflows', '--target', 'codex', '--limit', '1', '--json']);
+    const result = run(['operator', 'workflows', '--target', 'claude-project', '--limit', '1', '--json']);
 
     assert.strictEqual(result.status, 0, result.stderr);
     const payload = parseJson(result.stdout);
-    assert.strictEqual(payload.target, 'codex');
+    assert.strictEqual(payload.target, 'claude-project');
     assert.strictEqual(payload.matches.length, 1);
-    assert.ok(payload.matches[0].targets.includes('codex'));
-    assert.ok(payload.matches[0].installCommand.includes('--target codex'));
+    assert.ok(payload.matches[0].targets.includes('claude-project'));
+    assert.ok(payload.matches[0].installCommand.includes('--target claude-project'));
   })) passed++; else failed++;
 
   if (test('rejects unknown targets', () => {

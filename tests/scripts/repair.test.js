@@ -98,29 +98,29 @@ function runTests() {
     const projectRoot = createTempDir('repair-project-');
 
     try {
-      const installResult = runNode(INSTALL_SCRIPT, ['--target', 'cursor', 'typescript'], {
+      const installResult = runNode(INSTALL_SCRIPT, ['--target', 'claude-project', 'typescript'], {
         cwd: projectRoot,
         homeDir,
       });
       assert.strictEqual(installResult.code, 0, installResult.stderr);
 
       const normalizedProjectRoot = fs.realpathSync(projectRoot);
-      const managedPath = path.join(normalizedProjectRoot, '.cursor', 'hooks', 'session-start.js');
-      const statePath = path.join(normalizedProjectRoot, '.cursor', 'ecc-install-state.json');
+      const managedPath = path.join(normalizedProjectRoot, '.claude', 'skills', 'ecc', 'coding-standards', 'SKILL.md');
+      const statePath = path.join(normalizedProjectRoot, '.claude', 'ecc', 'install-state.json');
       const expectedContent = fs.readFileSync(
-        path.join(REPO_ROOT, '.cursor', 'hooks', 'session-start.js'),
+        path.join(REPO_ROOT, 'skills', 'coding-standards', 'SKILL.md'),
         'utf8'
       );
       fs.writeFileSync(managedPath, '// drifted\n');
 
-      const doctorBefore = runNode(DOCTOR_SCRIPT, ['--target', 'cursor', '--json'], {
+      const doctorBefore = runNode(DOCTOR_SCRIPT, ['--target', 'claude-project', '--json'], {
         cwd: projectRoot,
         homeDir,
       });
       assert.strictEqual(doctorBefore.code, 1);
       assert.ok(JSON.parse(doctorBefore.stdout).results[0].issues.some(issue => issue.code === 'drifted-managed-files'));
 
-      const repairResult = runNode(REPAIR_SCRIPT, ['--target', 'cursor', '--json'], {
+      const repairResult = runNode(REPAIR_SCRIPT, ['--target', 'claude-project', '--json'], {
         cwd: projectRoot,
         homeDir,
       });
@@ -142,10 +142,10 @@ function runTests() {
     const projectRoot = createTempDir('repair-project-');
 
     try {
-      const targetRoot = path.join(projectRoot, '.cursor');
+      const targetRoot = path.join(projectRoot, '.claude');
       fs.mkdirSync(targetRoot, { recursive: true });
       const normalizedTargetRoot = fs.realpathSync(targetRoot);
-      const statePath = path.join(normalizedTargetRoot, 'ecc-install-state.json');
+      const statePath = path.join(normalizedTargetRoot, 'ecc', 'install-state.json');
       const jsonPath = path.join(normalizedTargetRoot, 'hooks.json');
       const renderedPath = path.join(normalizedTargetRoot, 'generated.md');
       const removedPath = path.join(normalizedTargetRoot, 'legacy-note.txt');
@@ -154,7 +154,7 @@ function runTests() {
       fs.writeFileSync(removedPath, 'stale\n');
 
       writeState(statePath, {
-        adapter: { id: 'cursor-project', target: 'cursor', kind: 'project' },
+        adapter: { id: 'claude-project', target: 'claude-project', kind: 'project' },
         targetRoot: normalizedTargetRoot,
         installStatePath: statePath,
         request: {
@@ -212,7 +212,7 @@ function runTests() {
         },
       });
 
-      const doctorBefore = runNode(DOCTOR_SCRIPT, ['--target', 'cursor', '--json'], {
+      const doctorBefore = runNode(DOCTOR_SCRIPT, ['--target', 'claude-project', '--json'], {
         cwd: projectRoot,
         homeDir,
       });
@@ -220,7 +220,7 @@ function runTests() {
       assert.ok(JSON.parse(doctorBefore.stdout).results[0].issues.some(issue => issue.code === 'drifted-managed-files'));
 
       const installedAtBefore = JSON.parse(fs.readFileSync(statePath, 'utf8')).installedAt;
-      const repairResult = runNode(REPAIR_SCRIPT, ['--target', 'cursor', '--json'], {
+      const repairResult = runNode(REPAIR_SCRIPT, ['--target', 'claude-project', '--json'], {
         cwd: projectRoot,
         homeDir,
       });
@@ -245,7 +245,7 @@ function runTests() {
       assert.strictEqual(repairedState.installedAt, installedAtBefore);
       assert.ok(repairedState.lastValidatedAt);
 
-      const doctorAfter = runNode(DOCTOR_SCRIPT, ['--target', 'cursor'], {
+      const doctorAfter = runNode(DOCTOR_SCRIPT, ['--target', 'claude-project'], {
         cwd: projectRoot,
         homeDir,
       });
@@ -262,15 +262,15 @@ function runTests() {
     const projectRoot = createTempDir('repair-project-');
 
     try {
-      const targetRoot = path.join(projectRoot, '.cursor');
+      const targetRoot = path.join(projectRoot, '.claude');
       fs.mkdirSync(targetRoot, { recursive: true });
       const normalizedTargetRoot = fs.realpathSync(targetRoot);
-      const statePath = path.join(normalizedTargetRoot, 'ecc-install-state.json');
+      const statePath = path.join(normalizedTargetRoot, 'ecc', 'install-state.json');
       const renderedPath = path.join(normalizedTargetRoot, 'generated.md');
       fs.writeFileSync(renderedPath, '# drifted\n');
 
       writeState(statePath, {
-        adapter: { id: 'cursor-project', target: 'cursor', kind: 'project' },
+        adapter: { id: 'claude-project', target: 'claude-project', kind: 'project' },
         targetRoot: normalizedTargetRoot,
         installStatePath: statePath,
         request: {
@@ -304,7 +304,7 @@ function runTests() {
         },
       });
 
-      const repairResult = runNode(REPAIR_SCRIPT, ['--target', 'cursor', '--dry-run', '--json'], {
+      const repairResult = runNode(REPAIR_SCRIPT, ['--target', 'claude-project', '--dry-run', '--json'], {
         cwd: projectRoot,
         homeDir,
       });

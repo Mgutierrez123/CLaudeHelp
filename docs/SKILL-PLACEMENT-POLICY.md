@@ -25,7 +25,7 @@ Location: `skills/<skill-name>/` with `SKILL.md` at root.
 
 Location: `~/.claude/skills/learned/<skill-name>/`.
 
-Created by continuous-learning (evaluate-session hook, /learn command). Default path is configurable via `skills/continuous-learning/config.json` → `learned_skills_path`.
+Created by continuous-learning-v2 (evaluate-session hook, /learn command). Default path is configurable via `skills/continuous-learning/config.json` → `learned_skills_path` (hook still reads this legacy path on disk).
 
 - Not in repo. Not shipped.
 - Must have `.provenance.json` sibling to `SKILL.md`.
