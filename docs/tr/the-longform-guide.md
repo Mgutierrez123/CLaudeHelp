@@ -94,7 +94,7 @@ Bir prompt'u birden çok kez tekrarlamanız gerekti ve Claude aynı probleme tak
 
 **Çözüm:** Claude Code önemsiz olmayan bir şey keşfettiğinde - bir hata ayıklama tekniği, bir geçici çözüm, projeye özgü bir desen - bu bilgiyi yeni bir skill olarak kaydeder. Benzer bir problem bir dahaki sefer ortaya çıktığında, skill otomatik olarak yüklenir.
 
-Bunu yapan bir sürekli öğrenme skill'i oluşturdum: `github.com/affaan-m/everything-claude-code/tree/main/skills/continuous-learning`
+Bunu yapan bir sürekli öğrenme skill'i oluşturdum: `github.com/affaan-m/everything-claude-code/tree/main/skills/continuous-learning-v2`
 
 **Neden Stop Hook (UserPromptSubmit Değil):**
 
@@ -327,7 +327,7 @@ alias q='cd ~/Desktop/projects'
 
 **Kendini Geliştiren Memory:**
 
-- Bu repo'da `skills/continuous-learning/`'e bakın
+- Bu repo'da `skills/continuous-learning-v2/`'e bakın
 - rlancemartin.github.io/2025/12/01/claude_diary/ - Oturum yansıma deseni
 
 **System Prompt'ları Referansı:**

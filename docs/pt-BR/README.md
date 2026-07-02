@@ -255,7 +255,7 @@ Use o comando `/skill-create` para análise local sem serviços externos:
 
 ```bash
 /skill-create                    # Analisar repositório atual
-/skill-create --instincts        # Também gerar instincts para continuous-learning
+/skill-create --instincts        # Também gerar instincts para continuous-learning-v2
 ```
 
 #### Opção B: GitHub App (Avançado)

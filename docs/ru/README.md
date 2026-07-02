@@ -487,7 +487,6 @@ everything-claude-code/
 |   |-- market-research/            # Market/competitor/investor research с атрибуцией источников (НОВОЕ)
 |   |-- investor-materials/         # Pitch decks, one-pagers, memos и финансовые модели (НОВОЕ)
 |   |-- investor-outreach/          # Персонализированный fundraising outreach и follow-up (НОВОЕ)
-|   |-- continuous-learning/        # Legacy v1 Stop-hook extraction паттернов
 |   |-- continuous-learning-v2/     # Обучение на основе инстинктов с confidence scoring
 |   |-- iterative-retrieval/        # Прогрессивное уточнение контекста для субагентов
 |   |-- strategic-compact/          # Рекомендации по ручной компактификации (Longform Guide)
@@ -723,8 +722,7 @@ npx ecc-agentshield init
 /evolve                 # Кластеризовать связанные инстинкты в skills
 ```
 
-Полную документацию смотрите в `skills/continuous-learning-v2/`.
-Оставляйте `continuous-learning/` только если вам явно нужен legacy v1 Stop-hook поток learned-skill.
+Полную документацию смотрите в `skills/continuous-learning-v2/`. Устаревший поток legacy v1 Stop-hook learned-skill (`continuous-learning/`) был объединён с v2.
 
 ---
 

@@ -260,7 +260,7 @@ everything-claude-code/
 |   |-- frontend-patterns/          # React, Next.js pattern'leri
 |   |-- security-review/            # Güvenlik kontrol listesi
 |   |-- tdd-workflow/               # TDD metodolojisi
-|   |-- continuous-learning/        # Oturumlardan otomatik pattern çıkarma
+|   |-- continuous-learning-v2/     # Oturumlardan otomatik pattern çıkarma (instinct tabanlı, v2)
 |   |-- django-patterns/            # Django pattern'leri
 |   |-- golang-patterns/            # Go deyimleri ve en iyi uygulamalar
 |   |-- ve 100+ daha fazla skill...

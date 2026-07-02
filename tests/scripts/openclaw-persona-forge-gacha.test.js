@@ -6,7 +6,7 @@ const SCRIPT = path.join(
   __dirname,
   '..',
   '..',
-  'skills',
+  'skills-nicho',
   'openclaw-persona-forge',
   'gacha.py'
 );

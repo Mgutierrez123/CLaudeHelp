@@ -46,7 +46,7 @@ head -n 50 large-file.txt
 **Symptom:** Agent doesn't remember previous context or observations
 
 **Causes:**
-- Disabled continuous-learning hooks
+- Disabled continuous-learning-v2 hooks
 - Corrupted observation files
 - Project detection failures
 

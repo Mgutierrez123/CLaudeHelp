@@ -94,7 +94,7 @@ alias claude-research='claude --system-prompt "$(cat ~/.claude/contexts/research
 
 **解決策：** Claude Codeが自明でないことを発見した場合 — デバッグ技術、回避策、プロジェクト固有のパターンなど — その知識を新しいスキルとして保存。次回同様の問題が発生した際、スキルが自動的に読み込まれます。
 
-この機能を実現する継続学習スキルを構築しました：`github.com/affaan-m/everything-claude-code/tree/main/skills/continuous-learning`
+この機能を実現する継続学習スキルを構築しました：`github.com/affaan-m/everything-claude-code/tree/main/skills/continuous-learning-v2`
 
 **なぜStopフック（UserPromptSubmitではなく）：**
 
@@ -327,7 +327,7 @@ alias q='cd ~/Desktop/projects'
 
 **自己改善メモリ：**
 
-- このリポジトリの `skills/continuous-learning/` を参照
+- このリポジトリの `skills/continuous-learning-v2/` を参照
 - rlancemartin.github.io/2025/12/01/claude_diary/ - セッション振り返りパターン
 
 **システムプロンプトリファレンス：**

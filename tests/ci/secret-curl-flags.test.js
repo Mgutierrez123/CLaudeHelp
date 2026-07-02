@@ -16,7 +16,7 @@ const jiraDocs = [
 ];
 
 const socialDocs = [
-  'skills/social-publisher/SKILL.md',
+  'skills-nicho/social-publisher/SKILL.md',
 ];
 
 function test(name, fn) {

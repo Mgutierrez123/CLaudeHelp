@@ -492,10 +492,6 @@ test('release name and plugin publication checklist freezes rc.1 surfaces', () =
 test('active release identity surfaces use canonical ECC repo URLs', () => {
   const activeFiles = [
     'README.md',
-    '.codex-plugin/README.md',
-    '.codex-plugin/plugin.json',
-    '.opencode/README.md',
-    '.opencode/package.json',
     'docs/business/metrics-and-sponsorship.md',
     'docs/releases/2.0.0-rc.1/quickstart.md',
     'docs/releases/2.0.0-rc.1/x-thread.md',

@@ -542,7 +542,6 @@ ECC/
 |   |-- market-research/            # Quellenbelegte Markt-, Wettbewerber- und Investorenrecherche (NEU)
 |   |-- investor-materials/         # Pitch-Decks, One-Pager, Memos und Finanzmodelle (NEU)
 |   |-- investor-outreach/          # Personalisierte Fundraising-Ansprache und Follow-up (NEU)
-|   |-- continuous-learning/        # Legacy-v1-Stop-Hook-Musterextraktion
 |   |-- continuous-learning-v2/     # Instinct-basiertes Lernen mit Konfidenz-Scoring
 |   |-- iterative-retrieval/        # Progressive Kontextverfeinerung für Subagents
 |   |-- strategic-compact/          # Manuelle Compaction-Vorschläge (Langleitfaden)
@@ -784,8 +783,7 @@ Das Instinct-basierte Lernsystem lernt deine Muster automatisch:
 /evolve                 # Verwandte Instincts zu Skills clustern
 ```
 
-Die vollständige Dokumentation findest du unter `skills/continuous-learning-v2/`.
-Behalte `continuous-learning/` nur dann, wenn du den Legacy-v1-Stop-Hook-Flow für gelernte Skills ausdrücklich willst.
+Die vollständige Dokumentation findest du unter `skills/continuous-learning-v2/`. Der Legacy-v1-Stop-Hook-Flow (`continuous-learning/`) wurde in v2 konsolidiert.
 
 ---
 

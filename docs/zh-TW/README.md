@@ -164,7 +164,6 @@ everything-claude-code/
 |   |-- coding-standards/           # 程式語言最佳實務
 |   |-- backend-patterns/           # API、資料庫、快取模式
 |   |-- frontend-patterns/          # React、Next.js 模式
-|   |-- continuous-learning/        # 從工作階段自動擷取模式（完整指南）
 |   |-- continuous-learning-v2/     # 基於本能的學習與信心評分
 |   |-- iterative-retrieval/        # 子代理程式的漸進式上下文精煉
 |   |-- strategic-compact/          # 手動壓縮建議（完整指南）

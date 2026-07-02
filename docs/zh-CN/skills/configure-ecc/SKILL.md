@@ -147,7 +147,7 @@ mkdir -p $TARGET/skills $TARGET/rules
 
 | 技能 | 描述 |
 |-------|-------------|
-| `continuous-learning` | 从会话中自动提取可重用模式作为习得技能 |
+| `continuous-learning-v2` | 从会话中自动提取可重用模式作为习得技能 |
 | `continuous-learning-v2` | 基于本能的学习，带有置信度评分，演变为技能/命令/代理 |
 | `eval-harness` | 用于评估驱动开发 (EDD) 的正式评估框架 |
 | `iterative-retrieval` | 用于子代理上下文问题的渐进式上下文优化 |

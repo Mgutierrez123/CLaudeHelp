@@ -229,98 +229,6 @@ function runTests() {
     }
   })) passed++; else failed++;
 
-  if (test('plans Cursor legacy assets and JSON merge payloads', () => {
-    const sourceRoot = createTempDir('install-executor-source-');
-    const projectRoot = createTempDir('install-executor-project-');
-    const homeDir = createTempDir('install-executor-home-');
-    try {
-      writeLegacySourceFixture(sourceRoot);
-
-      const plan = createLegacyInstallPlan({
-        sourceRoot,
-        projectRoot,
-        homeDir,
-        target: 'cursor',
-        languages: ['typescript', 'ruby', 'bad/name'],
-      });
-
-      const targetRoot = path.join(projectRoot, '.cursor');
-      assert.strictEqual(plan.installRoot, targetRoot);
-      assert.ok(operationFor(plan, path.join('.cursor', 'rules', 'common-style.md')));
-      assert.ok(operationFor(plan, path.join('.cursor', 'rules', 'typescript-style.md')));
-      assert.ok(operationFor(plan, path.join('.cursor', 'agents', 'ecc-planner.md')));
-      assert.ok(!plan.operations.some(operation => (
-        operation.destinationPath.endsWith(path.join('.cursor', 'agents', 'planner.md'))
-      )));
-      assert.ok(operationFor(plan, path.join('.cursor', 'skills', 'demo', 'SKILL.md')));
-      assert.ok(operationFor(plan, path.join('.cursor', 'commands', 'plan.md')));
-      assert.ok(operationFor(plan, path.join('.cursor', 'hooks', 'hook.js')));
-      assert.ok(operationFor(plan, path.join('.cursor', 'hooks.json')));
-      const mergeOperation = plan.operations.find(operation => operation.kind === 'merge-json');
-      assert.ok(mergeOperation, 'Should merge shared MCP config into Cursor');
-      assert.deepStrictEqual(mergeOperation.mergePayload.mcpServers.github.command, 'github-mcp');
-      assert.ok(plan.warnings.some(warning => warning.includes("No Cursor rules for 'ruby'")));
-      assert.ok(plan.warnings.some(warning => warning.includes("Invalid language name 'bad/name'")));
-      assert.strictEqual(plan.statePreview.target.id, 'cursor-project');
-    } finally {
-      cleanup(sourceRoot);
-      cleanup(projectRoot);
-      cleanup(homeDir);
-    }
-  })) passed++; else failed++;
-
-  if (test('surfaces invalid Cursor MCP JSON while planning legacy install', () => {
-    const sourceRoot = createTempDir('install-executor-source-');
-    const projectRoot = createTempDir('install-executor-project-');
-    const homeDir = createTempDir('install-executor-home-');
-    try {
-      writeLegacySourceFixture(sourceRoot);
-      fs.writeFileSync(path.join(sourceRoot, '.mcp.json'), '[]\n', 'utf8');
-
-      assert.throws(
-        () => createLegacyInstallPlan({ sourceRoot, projectRoot, homeDir, target: 'cursor' }),
-        /Invalid \.mcp\.json/
-      );
-    } finally {
-      cleanup(sourceRoot);
-      cleanup(projectRoot);
-      cleanup(homeDir);
-    }
-  })) passed++; else failed++;
-
-  if (test('plans Antigravity legacy files with flattened rule names', () => {
-    const sourceRoot = createTempDir('install-executor-source-');
-    const projectRoot = createTempDir('install-executor-project-');
-    const homeDir = createTempDir('install-executor-home-');
-    try {
-      writeLegacySourceFixture(sourceRoot);
-      writeFile(projectRoot, path.join('.agent', 'rules', 'existing.md'), '# Existing\n');
-
-      const plan = createLegacyInstallPlan({
-        sourceRoot,
-        projectRoot,
-        homeDir,
-        target: 'antigravity',
-        languages: ['typescript', 'missing-lang', 'bad/name'],
-      });
-
-      assert.strictEqual(plan.installRoot, path.join(projectRoot, '.agent'));
-      assert.ok(plan.warnings.some(warning => warning.includes('files may be overwritten')));
-      assert.ok(plan.warnings.some(warning => warning.includes("rules/missing-lang/ does not exist")));
-      assert.ok(plan.warnings.some(warning => warning.includes("Invalid language name 'bad/name'")));
-      assert.ok(operationFor(plan, path.join('.agent', 'rules', 'common-coding-style.md')));
-      assert.ok(operationFor(plan, path.join('.agent', 'rules', 'typescript-testing.md')));
-      assert.ok(operationFor(plan, path.join('.agent', 'workflows', 'plan.md')));
-      assert.ok(operationFor(plan, path.join('.agent', 'skills', 'architect.md')));
-      assert.ok(operationFor(plan, path.join('.agent', 'skills', 'demo', 'SKILL.md')));
-      assert.strictEqual(plan.statePreview.target.id, 'antigravity-project');
-    } finally {
-      cleanup(sourceRoot);
-      cleanup(projectRoot);
-      cleanup(homeDir);
-    }
-  })) passed++; else failed++;
-
   if (test('materializes manifest scaffold operations and filters generated runtime state', () => {
     const sourceRoot = createTempDir('install-executor-source-');
     const homeDir = createTempDir('install-executor-home-');
@@ -383,7 +291,7 @@ function runTests() {
         sourceRoot: REPO_ROOT,
         projectRoot,
         homeDir,
-        target: 'cursor',
+        target: 'claude-project',
         legacyLanguages: ['rust'],
       });
 

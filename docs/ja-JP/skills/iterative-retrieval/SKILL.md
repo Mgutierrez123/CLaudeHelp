@@ -198,5 +198,5 @@ async function iterativeRetrieve(task, maxCycles = 3) {
 ## 関連項目
 
 - [The Longform Guide](https://x.com/affaanmustafa/status/2014040193557471352) - サブエージェントオーケストレーションセクション
-- `continuous-learning`スキル - 時間とともに改善するパターン用
+- `continuous-learning-v2`スキル - 時間とともに改善するパターン用
 - `~/.claude/agents/`内のエージェント定義
