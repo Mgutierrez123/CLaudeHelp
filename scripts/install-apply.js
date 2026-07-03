@@ -33,15 +33,6 @@ Usage: install.sh [--target <${LEGACY_INSTALL_TARGETS.join('|')}>] [--dry-run] [
 Targets:
   claude       (default) - Install ECC into ~/.claude/ with managed rules/skills under rules/ecc and skills/ecc
   claude-project - Install ECC into ./.claude/ (per-project) with managed rules/skills under rules/ecc and skills/ecc
-  cursor       - Install rules, hooks, and bundled Cursor configs to ./.cursor/
-  antigravity  - Install rules, workflows, skills, and agents to ./.agent/
-  codex        - Install shared agents/config into ~/.codex/
-  gemini       - Install project-local Gemini config into ./.gemini/
-  opencode     - Install shared commands/hooks/config into ~/.opencode/
-  codebuddy    - Install commands, agents, skills, and flattened rules into ./.codebuddy/
-  joycode      - Install commands, agents, skills, and flattened rules into ./.joycode/
-  qwen         - Install commands, agents, skills, rules, and Qwen config into ~/.qwen/
-  zed          - Install project settings, commands, agents, skills, and flattened rules into ./.zed/
 
 Options:
   --profile <name>    Resolve and install a manifest profile
