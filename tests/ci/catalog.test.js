@@ -39,30 +39,15 @@ function writeCountedFiles(root, category, count) {
 }
 
 function writeEnglishReadme(root, counts, options = {}) {
-  const tableCounts = options.tableCounts || counts;
-  const parityCounts = options.parityCounts || counts;
   const unrelatedSkillsCount = options.unrelatedSkillsCount || 16;
 
   fs.writeFileSync(path.join(root, 'README.md'), `Access to ${counts.agents} agents, ${counts.skills} skills, and ${counts.commands} commands.
 - **Public surface synced to the live repo** - metadata, catalog counts, plugin manifests, and install-facing docs now match the actual OSS surface: ${counts.agents} agents, ${counts.skills} skills, and ${counts.commands} legacy command shims.
 |-- agents/           # ${counts.agents} specialized subagents for delegation
-| Feature | Claude Code | Cursor IDE | Codex CLI | OpenCode |
-| --- | --- | --- | --- | --- |
-| Agents | PASS: ${tableCounts.agents} agents |
-| Commands | PASS: ${tableCounts.commands} commands |
-| Skills | PASS: ${tableCounts.skills} skills |
 
 | Feature | Count | Format |
 | --- | ---: | --- |
 | Skills | ${unrelatedSkillsCount} | .agents/skills/ |
-
-## Cross-Tool Feature Parity
-
-| Feature | Claude Code | Cursor IDE | Codex CLI | OpenCode |
-| --- | --- | --- | --- | --- |
-| **Agents** | ${parityCounts.agents} | Shared (AGENTS.md) | Shared (AGENTS.md) | 12 |
-| **Commands** | ${parityCounts.commands} | Shared | Instruction-based | 31 |
-| **Skills** | ${parityCounts.skills} | Shared | 10 (native format) | 37 |
 `);
 }
 
@@ -100,30 +85,15 @@ function writeZhRootReadme(root, counts) {
 }
 
 function writeZhDocsReadme(root, counts, options = {}) {
-  const tableCounts = options.tableCounts || counts;
-  const parityCounts = options.parityCounts || counts;
   const unrelatedSkillsCount = options.unrelatedSkillsCount || 16;
   const dir = path.join(root, 'docs', 'zh-CN');
   fs.mkdirSync(dir, { recursive: true });
 
   fs.writeFileSync(path.join(dir, 'README.md'), `你现在可以使用 ${counts.agents} 个智能体、${counts.skills} 项技能和 ${counts.commands} 个命令了。
-| 功能特性 | Claude Code | OpenCode | 状态 |
-| --- | --- | --- | --- |
-| 智能体 | PASS: ${tableCounts.agents} 个 |
-| 命令 | PASS: ${tableCounts.commands} 个 |
-| 技能 | PASS: ${tableCounts.skills} 项 |
 
 | 功能特性 | 数量 | 格式 |
 | --- | ---: | --- |
 | 技能 | ${unrelatedSkillsCount} | .agents/skills/ |
-
-## 跨工具功能对等
-
-| 功能特性 | Claude Code | Cursor IDE | Codex CLI | OpenCode |
-| --- | --- | --- | --- | --- |
-| **智能体** | ${parityCounts.agents} | 共享 (AGENTS.md) | 共享 (AGENTS.md) | 12 |
-| **命令** | ${parityCounts.commands} | 共享 | 基于指令 | 31 |
-| **技能** | ${parityCounts.skills} | 共享 | 10 (原生格式) | 37 |
 `);
 }
 
@@ -227,7 +197,7 @@ function runTests() {
       assert.ok(formatted.includes('.claude-plugin/plugin.json description'));
       assert.ok(formatted.includes('.claude-plugin/marketplace.json plugin description'));
       assert.ok(formatted.includes('README.zh-CN.md quick-start summary'));
-      assert.ok(formatted.includes('docs/zh-CN/README.md parity table'));
+      assert.ok(formatted.includes('docs/zh-CN/README.md quick-start summary'));
       assert.ok(formatted.includes('docs/zh-CN/AGENTS.md project structure'));
     } finally {
       cleanupTestDir(testDir);

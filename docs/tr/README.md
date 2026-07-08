@@ -33,8 +33,6 @@
 
 Sadece konfigürasyon dosyaları değil. Tam bir sistem: skill'ler, instinct'ler, memory optimizasyonu, sürekli öğrenme, güvenlik taraması ve araştırma odaklı geliştirme. 10+ ay boyunca gerçek ürünler inşa ederken yoğun günlük kullanımla evrimleşmiş production-ready agent'lar, hook'lar, command'lar, rule'lar ve MCP konfigürasyonları.
 
-**Claude Code**, **Codex**, **Cursor**, **OpenCode**, **Gemini** ve diğer AI agent harness'larında çalışır.
-
 ---
 
 ## Rehberler
@@ -147,16 +145,12 @@ npm install        # veya: pnpm install | yarn install | bun install
 # macOS/Linux
 ./install.sh typescript    # veya python veya golang veya swift veya php
 # ./install.sh typescript python golang swift php
-# ./install.sh --target cursor typescript
-# ./install.sh --target antigravity typescript
 ```
 
 ```powershell
 # Windows PowerShell
 .\install.ps1 typescript   # veya python veya golang veya swift veya php
 # .\install.ps1 typescript python golang swift php
-# .\install.ps1 --target cursor typescript
-# .\install.ps1 --target antigravity typescript
 
 # npm-installed uyumluluk entry point'i de çapraz platform çalışır
 npx ecc-install typescript
@@ -183,7 +177,7 @@ Manuel kurulum talimatları için `rules/` klasöründeki README'ye bakın.
 
 ## Çapraz Platform Desteği
 
-Bu plugin artık **Windows, macOS ve Linux**'u tam olarak destekliyor, ana IDE'ler (Cursor, OpenCode, Antigravity) ve CLI harness'lar arasında sıkı entegrasyon ile birlikte. Tüm hook'lar ve script'ler maksimum uyumluluk için Node.js ile yeniden yazıldı.
+Bu plugin artık Claude Code için **Windows, macOS ve Linux**'u tam olarak destekliyor. Tüm hook'lar ve script'ler maksimum uyumluluk için Node.js ile yeniden yazıldı.
 
 ### Paket Yöneticisi Algılama
 
@@ -403,12 +397,7 @@ Her component tamamen bağımsızdır.
 <details>
 <summary><b>Bu Cursor / OpenCode / Codex / Antigravity ile çalışır mı?</b></summary>
 
-Evet. ECC çapraz platformdur:
-- **Cursor**: `.cursor/` içinde önceden çevrilmiş config'ler. [Cursor IDE Desteği](../../README.md#cursor-ide-support) bölümüne bakın.
-- **OpenCode**: `.opencode/` içinde tam plugin desteği. [OpenCode Desteği](../../README.md#opencode-support) bölümüne bakın.
-- **Codex**: macOS app ve CLI için birinci sınıf destek. PR [#257](https://github.com/affaan-m/everything-claude-code/pull/257)'ye bakın.
-- **Antigravity**: İş akışları, skill'ler ve `.agent/` içinde düzleştirilmiş rule'lar için sıkı entegre kurulum.
-- **Claude Code**: Native — bu birincil hedeftir.
+Hayır. Bu fork yalnızca **Claude Code** için kapsamlıdır — `claude` (home, `~/.claude/`) ve `claude-project` (proje bazlı, `./.claude/`) tek desteklenen kurulum hedefleridir. Kurulumcuyu ve skill/agent yüzeyini tek bir harness'a odaklamak için diğer harness'lara (Cursor, Codex, OpenCode, Antigravity, JoyCode, CodeBuddy, Qwen CLI, Zed, Gemini CLI) yönelik destek kaldırıldı.
 </details>
 
 <details>

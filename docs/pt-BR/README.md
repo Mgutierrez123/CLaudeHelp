@@ -34,8 +34,6 @@
 
 Não são apenas configurações. Um sistema completo: skills, instincts, otimização de memória, aprendizado contínuo, varredura de segurança e desenvolvimento com pesquisa em primeiro lugar. Agentes, hooks, comandos, regras e configurações MCP prontos para produção, desenvolvidos ao longo de 10+ meses de uso intensivo diário construindo produtos reais.
 
-Funciona com **Claude Code**, **Codex**, **Cursor**, **OpenCode**, **Gemini** e outros harnesses de agentes de IA.
-
 ---
 
 ## Os Guias
@@ -146,16 +144,12 @@ npm install        # ou: pnpm install | yarn install | bun install
 # macOS/Linux
 ./install.sh typescript    # ou python ou golang ou swift ou php
 # ./install.sh typescript python golang swift php
-# ./install.sh --target cursor typescript
-# ./install.sh --target antigravity typescript
 ```
 
 ```powershell
 # Windows PowerShell
 .\install.ps1 typescript   # ou python ou golang ou swift ou php
 # .\install.ps1 typescript python golang swift php
-# .\install.ps1 --target cursor typescript
-# .\install.ps1 --target antigravity typescript
 
 # O ponto de entrada de compatibilidade npm também funciona multiplataforma
 npx ecc-install typescript
@@ -180,7 +174,7 @@ npx ecc-install typescript
 
 ## Suporte Multiplataforma
 
-Este plugin agora suporta totalmente **Windows, macOS e Linux**, com integração estreita em principais IDEs (Cursor, OpenCode, Antigravity) e harnesses CLI. Todos os hooks e scripts foram reescritos em Node.js para máxima compatibilidade.
+Este plugin agora suporta totalmente **Windows, macOS e Linux** para o Claude Code. Todos os hooks e scripts foram reescritos em Node.js para máxima compatibilidade.
 
 ### Detecção de Gerenciador de Pacotes
 
@@ -469,12 +463,7 @@ Este é o problema mais comum. **NÃO adicione um campo `"hooks"` ao `.claude-pl
 <details>
 <summary><b>Posso usar o ECC com Cursor / OpenCode / Codex / Antigravity?</b></summary>
 
-Sim. O ECC é multiplataforma:
-- **Cursor**: Configs pré-traduzidas em `.cursor/`
-- **OpenCode**: Suporte completo a plugins em `.opencode/`
-- **Codex**: Suporte de primeira classe para app macOS e CLI
-- **Antigravity**: Configuração integrada em `.agent/`
-- **Claude Code**: Nativo — este é o alvo principal
+Não. Este fork é focado **exclusivamente no Claude Code** — `claude` (usuário, `~/.claude/`) e `claude-project` (por projeto, `./.claude/`) são os únicos alvos de instalação. O suporte a outros harnesses (Cursor, Codex, OpenCode, Antigravity, JoyCode, CodeBuddy, Qwen CLI, Zed, Gemini CLI) foi removido para manter o instalador e a superfície de skills/agentes focados em um único harness.
 </details>
 
 <details>

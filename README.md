@@ -40,11 +40,9 @@
 
 ---
 
-**The harness-native operator system for agentic work. Built from real-world multi-harness engineering workflows.**
+**The operator system for agentic work with Claude Code. Built from real-world engineering workflows.**
 
 Not just configs. A complete system: skills, instincts, memory optimization, continuous learning, security scanning, and research-first development. Production-ready agents, skills, hooks, rules, MCP configurations, and legacy command shims evolved over 10+ months of intensive daily use building real products.
-
-Works across **Codex**, **Claude Code**, **Cursor**, **OpenCode**, **Gemini**, **Zed**, **GitHub Copilot**, and other AI agent harnesses.
 
 ECC v2.0.0 adds the public Hermes operator story on top of that reusable layer: start with the [Hermes setup guide](docs/HERMES-SETUP.md), then review the [2.0.0 release notes](docs/releases/2.0.0/release-notes.md) and [cross-harness architecture](docs/architecture/cross-harness.md).
 
@@ -476,7 +474,7 @@ python3 ./ecc_dashboard.py
 
 ## Cross-Platform Support
 
-This plugin now fully supports **Windows, macOS, and Linux**, alongside tight integration across major IDEs (Cursor, Zed, OpenCode, Antigravity) and CLI harnesses. All hooks and scripts have been rewritten in Node.js for maximum compatibility.
+This plugin fully supports **Windows, macOS, and Linux** for Claude Code. All hooks and scripts are written in Node.js for maximum compatibility.
 
 ### Package Manager Detection
 
@@ -539,13 +537,12 @@ Windows PowerShell:
 [Environment]::SetEnvironmentVariable('ECC_SESSION_RETENTION_DAYS', '14', 'User')
 ```
 
-### Agent data home (multi-harness isolation)
+### Agent data home
 
-Memory persistence hooks (session summaries, learned skills, session aliases, metrics) store data under a single agent data root. By default that root is `~/.claude`. When you use ECC in both Claude Code and Cursor on the same machine, set a separate root for Cursor so the two environments do not overwrite each other's session files:
+Memory persistence hooks (session summaries, learned skills, session aliases, metrics) store data under a single agent data root. By default that root is `~/.claude`. Override it with `ECC_AGENT_DATA_HOME` if you need to isolate data for a specific setup:
 
 ```bash
-# Cursor-only boundary (Claude Code keeps the default ~/.claude)
-export ECC_AGENT_DATA_HOME="$HOME/.cursor/ecc"
+export ECC_AGENT_DATA_HOME="$HOME/.claude-alt/ecc"
 ```
 
 Paths resolved under that root include:
@@ -1214,20 +1211,11 @@ Each component is fully independent.
 </details>
 
 <details>
-<summary><b>Does this work with Cursor / OpenCode / Codex / Antigravity / GitHub Copilot?</b></summary>
+<summary><b>Does this work with Cursor / OpenCode / Codex / Antigravity?</b></summary>
 
-Yes. ECC is cross-platform:
-- **Cursor**: Pre-translated configs in `.cursor/`. See [Cursor IDE Support](#cursor-ide-support).
-- **Gemini CLI**: Experimental project-local support via `.gemini/GEMINI.md` and shared installer plumbing.
-- **OpenCode**: Full plugin support in `.opencode/`. See [OpenCode Support](#opencode-support).
-- **Codex**: First-class support for both macOS app and CLI, with adapter drift guards and SessionStart fallback. See PR [#257](https://github.com/affaan-m/ECC/pull/257).
-- **GitHub Copilot (VS Code)**: Instruction and prompt layer via `.github/copilot-instructions.md`, `.vscode/settings.json`, and `.github/prompts/`. See [GitHub Copilot Support](#github-copilot-support).
-- **Antigravity**: Tightly integrated setup for workflows, skills, and flattened rules in `.agent/`. See [Antigravity Guide](docs/ANTIGRAVITY-GUIDE.md).
-- **JoyCode / CodeBuddy**: Project-local selective install adapters for commands, agents, skills, and flattened rules. See [JoyCode Adapter Guide](docs/JOYCODE-GUIDE.md).
-- **Qwen CLI**: Home-directory selective install adapter for commands, agents, skills, rules, and Qwen config. See [Qwen CLI Adapter Guide](docs/QWEN-GUIDE.md).
-- **Zed**: Project-local selective install adapter for `.zed/settings.json`, flattened rules, commands, agents, and skills.
-- **Non-native harnesses**: Manual fallback path for Grok and similar interfaces. See [Manual Adaptation Guide](docs/MANUAL-ADAPTATION-GUIDE.md).
-- **Claude Code**: Native — this is the primary target.
+No. This fork is scoped to **Claude Code only** — `claude` (home, `~/.claude/`) and `claude-project` (per-project, `./.claude/`) are the only install targets. Support for other harnesses (Cursor, Codex, OpenCode, Antigravity, JoyCode, CodeBuddy, Qwen CLI, Zed, Gemini CLI) has been removed to keep the installer and skill/agent surface focused on a single harness.
+
+The only exception is **GitHub Copilot (VS Code)**, which works through static instruction files (`.github/copilot-instructions.md`, `.vscode/settings.json`) rather than this repo's installer — see [GitHub Copilot Support](#github-copilot-support).
 </details>
 
 <details>
@@ -1277,349 +1265,6 @@ Please contribute! See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 - DevOps agents (Kubernetes, Terraform, AWS, Docker)
 - Testing strategies (different frameworks, visual regression)
 - Domain-specific knowledge (ML, data engineering, mobile)
-
----
-
-## Cursor IDE Support
-
-ECC provides Cursor IDE support with hooks, rules, agents, skills, commands, and MCP configs adapted for Cursor's project layout.
-
-### Quick Start (Cursor)
-
-```bash
-# macOS/Linux
-./install.sh --target cursor typescript
-./install.sh --target cursor python golang swift php
-```
-
-```powershell
-# Windows PowerShell
-.\install.ps1 --target cursor typescript
-.\install.ps1 --target cursor python golang swift php
-```
-
-### What's Included
-
-| Component | Count | Details |
-|-----------|-------|---------|
-| Hook Events | 15 | sessionStart, beforeShellExecution, afterFileEdit, beforeMCPExecution, beforeSubmitPrompt, and 10 more |
-| Hook Scripts | 16 | Thin Node.js scripts delegating to `scripts/hooks/` via shared adapter |
-| Rules | 34 | 9 common (alwaysApply) + 25 language-specific (TypeScript, Python, Go, Swift, PHP) |
-| Agents | 48 | `.cursor/agents/ecc-*.md` when installed; prefixed to avoid collisions with user or marketplace agents |
-| Skills | Shared + Bundled | `.cursor/skills/` for translated additions |
-| Commands | Shared | `.cursor/commands/` if installed |
-| MCP Config | Shared | `.cursor/mcp.json` if installed |
-
-### Cursor Loading Notes
-
-ECC does not install root `AGENTS.md` into `.cursor/`. Cursor treats nested `AGENTS.md` files as directory context, so copying ECC's repo identity into a host project would pollute that project.
-
-Cursor-native loading behavior can vary by Cursor build. ECC installs agents as `.cursor/agents/ecc-*.md`; if your Cursor build does not expose project agents, those files still work as explicit reference definitions instead of hidden global prompt context.
-
-### Memory and data isolation (Cursor + Claude Code)
-
-ECC memory hooks reuse the same `scripts/hooks/*.js` as Claude Code. For Cursor, ECC tries to keep memory **out of `~/.claude` automatically**:
-
-1. **Cursor `sessionStart` hook** (installed to `.cursor/hooks.json` on `--target cursor`) injects `ECC_AGENT_DATA_HOME` for the whole composer session.
-2. **Hook runtime default** — when `CURSOR_VERSION` or `CURSOR_PROJECT_DIR` is present, hooks default to `~/.cursor/ecc` if the env var is unset.
-3. **Project config** — `.cursor/ecc-agent-data.json` documents and overrides the path (`agentDataHome`).
-4. **Always-on rule** — `.cursor/rules/ecc-agent-data-home.mdc` reminds the agent where memory lives.
-
-You can still override explicitly:
-
-```bash
-export ECC_AGENT_DATA_HOME="$HOME/.cursor/ecc"
-```
-
-To **share** memory with Claude Code on purpose, set `ECC_AGENT_DATA_HOME=~/.claude` in the shell or in `.cursor/ecc-agent-data.json`.
-
-Continuous learning v2 instincts remain separate under `CLV2_HOMUNCULUS_DIR` (default `~/.local/share/ecc-homunculus`).
-
-### Hook Architecture (DRY Adapter Pattern)
-
-Cursor has **more hook events than Claude Code** (20 vs 8). The `.cursor/hooks/adapter.js` module transforms Cursor's stdin JSON to Claude Code's format, allowing existing `scripts/hooks/*.js` to be reused without duplication.
-
-```
-Cursor stdin JSON → adapter.js → transforms → scripts/hooks/*.js
-                                              (shared with Claude Code)
-```
-
-Key hooks:
-- **beforeShellExecution** — Blocks dev servers outside tmux (exit 2), git push review
-- **afterFileEdit** — Auto-format + TypeScript check + console.log warning
-- **beforeSubmitPrompt** — Detects secrets (sk-, ghp_, AKIA patterns) in prompts
-- **beforeTabFileRead** — Blocks Tab from reading .env, .key, .pem files (exit 2)
-- **beforeMCPExecution / afterMCPExecution** — MCP audit logging
-
-### Rules Format
-
-Cursor rules use YAML frontmatter with `description`, `globs`, and `alwaysApply`:
-
-```yaml
----
-description: "TypeScript coding style extending common rules"
-globs: ["**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx"]
-alwaysApply: false
----
-```
-
----
-
-## Codex macOS App + CLI Support
-
-ECC provides **first-class Codex support** for both the macOS app and CLI, with a reference configuration, Codex-specific AGENTS.md supplement, and shared skills.
-
-### Quick Start (Codex App + CLI)
-
-```bash
-# Run Codex CLI in the repo — AGENTS.md and .codex/ are auto-detected
-codex
-
-# Automatic setup: sync ECC assets (AGENTS.md, skills, MCP servers) into ~/.codex
-npm install && bash scripts/sync-ecc-to-codex.sh
-# or: pnpm install && bash scripts/sync-ecc-to-codex.sh
-# or: yarn install && bash scripts/sync-ecc-to-codex.sh
-# or: bun install && bash scripts/sync-ecc-to-codex.sh
-
-# Or manually: copy the reference config to your home directory
-cp .codex/config.toml ~/.codex/config.toml
-```
-
-The sync script safely merges ECC MCP servers into your existing `~/.codex/config.toml` using an **add-only** strategy — it never removes or modifies your existing servers. Run with `--dry-run` to preview changes, or `--update-mcp` to force-refresh ECC servers to the latest recommended config.
-
-For Context7, ECC uses the canonical Codex section name `[mcp_servers.context7]` while still launching the `@upstash/context7-mcp` package. If you already have a legacy `[mcp_servers.context7-mcp]` entry, `--update-mcp` migrates it to the canonical section name.
-
-Codex macOS app:
-- Open this repository as your workspace.
-- The root `AGENTS.md` is auto-detected.
-- `.codex/config.toml` and `.codex/agents/*.toml` work best when kept project-local.
-- The reference `.codex/config.toml` intentionally does not pin `model` or `model_provider`, so Codex uses its own current default unless you override it.
-- Optional: copy `.codex/config.toml` to `~/.codex/config.toml` for global defaults; keep the multi-agent role files project-local unless you also copy `.codex/agents/`.
-
-### Codex Plugin Marketplace (experimental)
-
-The repo also exposes a Codex repo-scoped marketplace (`.agents/plugins/marketplace.json`) whose entry points at the `plugins/ecc/` plugin folder — Codex does not discover plugins whose local marketplace `source.path` is the repository root (`./`), so the entry must target a concrete plugin subdirectory:
-
-```bash
-codex plugin marketplace add affaan-m/ECC
-codex plugin list
-node scripts/codex/check-plugin-cache.js
-```
-
-`codex plugin list` only confirms marketplace registration. Run
-`node scripts/codex/check-plugin-cache.js` after install to verify that the
-installed cache can resolve the manifest's skills, MCP config, and assets.
-
-**Plugin mode is currently fragile on Codex.** Marketplace discovery and install work with this layout, but runtime skill loading from local/repo marketplaces is still unreliable upstream ([openai/codex#26037](https://github.com/openai/codex/issues/26037)): Codex copies only the plugin folder into its install cache, so plugins that reference shared repo content may not expose skills in a fresh session. If the cache health check reports missing manifest references, treat the plugin path as discovery-only and prefer the manual sync flow above (`scripts/sync-ecc-to-codex.sh`), which is the supported Codex route. See [#2128](https://github.com/affaan-m/ECC/issues/2128) for the full investigation.
-
-### What's Included
-
-| Component | Count | Details |
-|-----------|-------|---------|
-| Config | 1 | `.codex/config.toml` — top-level approvals/sandbox/web_search, MCP servers, notifications, profiles |
-| AGENTS.md | 2 | Root (universal) + `.codex/AGENTS.md` (Codex-specific supplement) |
-| Skills | 32 | `.agents/skills/` — SKILL.md + agents/openai.yaml per skill |
-| MCP Servers | 6 | GitHub, Context7, Exa, Memory, Playwright, Sequential Thinking (7 with Supabase via `--update-mcp` sync) |
-| Profiles | 2 | `strict` (read-only sandbox) and `yolo` (full auto-approve) |
-| Agent Roles | 3 | `.codex/agents/` — explorer, reviewer, docs-researcher |
-
-### Skills
-
-Skills at `.agents/skills/` are auto-loaded by Codex:
-
-Canonical Anthropic skills such as `claude-api`, `frontend-design`, and `skill-creator` are intentionally not re-bundled here. Install those from [`anthropics/skills`](https://github.com/anthropics/skills) when you want the official versions.
-
-| Skill | Description |
-|-------|-------------|
-| agent-introspection-debugging | Debug agent behavior, routing, and prompt boundaries |
-| agent-sort | Sort agent catalogs and assignment surfaces |
-| api-design | REST API design patterns |
-| article-writing | Long-form writing from notes and voice references |
-| backend-patterns | API design, database, caching |
-| brand-voice | Source-derived writing style profiles from real content |
-| bun-runtime | Bun as runtime, package manager, bundler, and test runner |
-| coding-standards | Universal coding standards |
-| codehealth-mcp | Optional — Code Health MCP (opt-in server + token); structural review and commit/PR gates |
-| content-engine | Platform-native social content and repurposing |
-| crosspost | Multi-platform content distribution across X, LinkedIn, Threads |
-| deep-research | Multi-source research with synthesis and source attribution |
-| dmux-workflows | Multi-agent orchestration using tmux pane manager |
-| documentation-lookup | Up-to-date library and framework docs via Context7 MCP |
-| e2e-testing | Playwright E2E tests |
-| eval-harness | Eval-driven development |
-| everything-claude-code | Development conventions and patterns for the project |
-| exa-search | Neural search via Exa MCP for web, code, company research |
-| fal-ai-media | Unified media generation for images, video, and audio |
-| frontend-patterns | React/Next.js patterns |
-| frontend-slides | HTML presentations, PPTX conversion, visual style exploration |
-| investor-materials | Decks, memos, models, and one-pagers |
-| investor-outreach | Personalized outreach, follow-ups, and intro blurbs |
-| market-research | Source-attributed market and competitor research |
-| mcp-server-patterns | Build MCP servers with Node/TypeScript SDK |
-| nextjs-turbopack | Next.js 16+ and Turbopack incremental bundling |
-| product-capability | Translate product goals into scoped capability maps |
-| security-review | Comprehensive security checklist |
-| strategic-compact | Context management |
-| tdd-workflow | Test-driven development with 80%+ coverage |
-| verification-loop | Build, test, lint, typecheck, security |
-| video-editing | AI-assisted video editing workflows with FFmpeg and Remotion |
-| x-api | X/Twitter API integration for posting and analytics |
-
-### Key Limitation
-
-Codex does **not yet provide Claude-style hook execution parity**. ECC enforcement there is instruction-based via `AGENTS.md`, optional `model_instructions_file` overrides, and sandbox/approval settings.
-
-### Multi-Agent Support
-
-Current Codex builds support stable multi-agent workflows.
-
-- Enable `features.multi_agent = true` in `.codex/config.toml`
-- Define roles under `[agents.<name>]`
-- Point each role at a file under `.codex/agents/`
-- Use `/agent` in the CLI to inspect or steer child agents
-
-ECC ships three sample role configs:
-
-| Role | Purpose |
-|------|---------|
-| `explorer` | Read-only codebase evidence gathering before edits |
-| `reviewer` | Correctness, security, and missing-test review |
-| `docs_researcher` | Documentation and API verification before release/docs changes |
-
----
-
-## Zed Support
-
-ECC provides Zed project support through a conservative `.zed` adapter for project-local settings, flattened rules, agents, commands, and skills.
-
-```bash
-./install.sh --profile minimal --target zed
-```
-
-```powershell
-.\install.ps1 --profile minimal --target zed
-```
-
-The adapter writes ECC-managed files under `.zed/` and keeps BYOK/OpenRouter credentials out of the repo. Configure Zed account or API keys through Zed's own settings UI or your local user settings.
-
----
-
-## OpenCode Support
-
-ECC provides **full OpenCode support** including plugins and hooks.
-
-### Quick Start
-
-```bash
-# Install OpenCode
-npm install -g opencode
-
-# Run in the repository root
-opencode
-```
-
-The configuration is automatically detected from `.opencode/opencode.json`.
-
-### Feature Parity
-
-| Feature | Claude Code         | OpenCode | Status |
-|---------|---------------------|----------|--------|
-| Agents | PASS: 53 agents     | PASS: 12 agents | **Claude Code leads** |
-| Commands | PASS: 92 commands   | PASS: 35 commands | **Claude Code leads** |
-| Skills | PASS: 200 skills    | PASS: 37 skills | **Claude Code leads** |
-| Hooks | PASS: 8 event types | PASS: 11 events | **OpenCode has more!** |
-| Rules | PASS: 29 rules      | PASS: 13 instructions | **Claude Code leads** |
-| MCP Servers | PASS: 14 servers    | PASS: Full | **Full parity** |
-| Custom Tools | PASS: Via hooks     | PASS: 6 native tools | **OpenCode is better** |
-
-### Hook Support via Plugins
-
-OpenCode's plugin system is MORE sophisticated than Claude Code with 20+ event types:
-
-| Claude Code Hook | OpenCode Plugin Event |
-|-----------------|----------------------|
-| PreToolUse | `tool.execute.before` |
-| PostToolUse | `tool.execute.after` |
-| Stop | `session.idle` |
-| SessionStart | `session.created` |
-| SessionEnd | `session.deleted` |
-
-**Additional OpenCode events**: `file.edited`, `file.watcher.updated`, `message.updated`, `lsp.client.diagnostics`, `tui.toast.show`, and more.
-
-### Maintained Slash Entries
-
-| Command | Description |
-|---------|-------------|
-| `/plan` | Create implementation plan |
-| `/code-review` | Review code changes |
-| `/build-fix` | Fix build errors |
-| `/refactor-clean` | Remove dead code |
-| `/learn` | Extract patterns from session |
-| `/checkpoint` | Save verification state |
-| `/quality-gate` | Run the maintained verification gate |
-| `/update-docs` | Update documentation |
-| `/update-codemaps` | Update codemaps |
-| `/test-coverage` | Analyze coverage |
-| `/go-review` | Go code review |
-| `/go-test` | Go TDD workflow |
-| `/go-build` | Fix Go build errors |
-| `/python-review` | Python code review (PEP 8, type hints, security) |
-| `/multi-plan` | Multi-model collaborative planning |
-| `/multi-execute` | Multi-model collaborative execution |
-| `/multi-backend` | Backend-focused multi-model workflow |
-| `/multi-frontend` | Frontend-focused multi-model workflow |
-| `/multi-workflow` | Full multi-model development workflow |
-| `/pm2` | Auto-generate PM2 service commands |
-| `/sessions` | Manage session history |
-| `/skill-create` | Generate skills from git |
-| `/instinct-status` | View learned instincts |
-| `/instinct-import` | Import instincts |
-| `/instinct-export` | Export instincts |
-| `/evolve` | Cluster instincts into skills |
-| `/promote` | Promote project instincts to global scope |
-| `/projects` | List known projects and instinct stats |
-| `/prune` | Delete expired pending instincts (30d TTL) |
-| `/learn-eval` | Extract and evaluate patterns before saving |
-| `/setup-pm` | Configure package manager |
-| `/harness-audit` | Audit harness reliability, eval readiness, and risk posture |
-| `/loop-start` | Start controlled agentic loop execution pattern |
-| `/loop-status` | Inspect active loop status and checkpoints |
-| `/quality-gate` | Run quality gate checks for paths or entire repo |
-| `/model-route` | Route tasks to models by complexity and budget |
-
-### Plugin Installation
-
-**Option 1: Use directly**
-```bash
-cd ECC
-opencode
-```
-
-**Option 2: Install as npm package**
-```bash
-npm install ecc-universal
-```
-
-Then add to your `opencode.json`:
-```json
-{
-  "plugin": ["ecc-universal"]
-}
-```
-
-That npm plugin entry enables ECC's published OpenCode plugin module (hooks/events and plugin tools).
-It does **not** automatically add ECC's full command/agent/instruction catalog to your project config.
-
-For the full ECC OpenCode setup, either:
-- run OpenCode inside this repository, or
-- copy the bundled `.opencode/` config assets into your project and wire the `instructions`, `agent`, and `command` entries in `opencode.json`
-
-### Documentation
-
-- **Migration Guide**: `.opencode/MIGRATION.md`
-- **OpenCode Plugin README**: `.opencode/README.md`
-- **Consolidated Rules**: `.opencode/instructions/INSTRUCTIONS.md`
-- **LLM Documentation**: `llms.txt` (complete OpenCode docs for LLMs)
 
 ---
 
@@ -1676,34 +1321,6 @@ The **`.vscode/settings.json`** adds per-task instruction overlays so Copilot re
 ### Limitations
 
 GitHub Copilot does not have a hook system or a subagent API, so ECC's hook automations (auto-format, TypeScript check, session persistence, dev-server guard) and agent delegation are unavailable. The instruction and prompt layer still brings the full ECC coding philosophy — standards, security, TDD, and workflow — into every Copilot Chat session.
-
----
-
-## Cross-Tool Feature Parity
-
-ECC is the **first plugin to maximize every major AI coding tool**. Here's how each harness compares:
-
-| Feature | Claude Code           | Cursor IDE | Codex CLI | OpenCode | GitHub Copilot |
-|---------|-----------------------|------------|-----------|----------|----------------|
-| **Agents** | 53                    | Shared (AGENTS.md) | Shared (AGENTS.md) | 12 | N/A |
-| **Commands** | 92                    | Shared | Instruction-based | 35 | 5 prompts |
-| **Skills** | 200                   | Shared | 10 (native format) | 37 | Via instructions |
-| **Hook Events** | 8 types               | 15 types | None yet | 11 types | None |
-| **Hook Scripts** | 20+ scripts           | 16 scripts (DRY adapter) | N/A | Plugin hooks | N/A |
-| **Rules** | 34 (common + lang)    | 34 (YAML frontmatter) | Instruction-based | 13 instructions | 1 always-on file |
-| **Custom Tools** | Via hooks             | Via hooks | N/A | 6 native tools | N/A |
-| **MCP Servers** | 14                    | Shared (mcp.json) | 7 (auto-merged via TOML parser) | Full | N/A |
-| **Config Format** | settings.json         | hooks.json + rules/ | config.toml | opencode.json | copilot-instructions.md + settings.json |
-| **Context File** | CLAUDE.md + AGENTS.md | AGENTS.md | AGENTS.md | AGENTS.md | copilot-instructions.md |
-| **Secret Detection** | Hook-based            | beforeSubmitPrompt hook | Sandbox-based | Hook-based | Instruction-based |
-| **Auto-Format** | PostToolUse hook      | afterFileEdit hook | N/A | file.edited hook | N/A |
-| **Version** | Plugin | Plugin | Reference config | 2.0.0 | Instruction layer |
-
-**Key architectural decisions:**
-- **AGENTS.md** at root is the universal cross-tool file (read by Claude Code, Cursor, Codex, and OpenCode — GitHub Copilot uses `.github/copilot-instructions.md` instead)
-- **DRY adapter pattern** lets Cursor reuse Claude Code's hook scripts without duplication
-- **Skills format** (SKILL.md with YAML frontmatter) works across Claude Code, Codex, and OpenCode
-- Codex's lack of hooks is compensated by `AGENTS.md`, optional `model_instructions_file` overrides, and sandbox permissions
 
 ---
 

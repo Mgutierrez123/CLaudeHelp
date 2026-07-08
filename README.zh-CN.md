@@ -34,8 +34,6 @@
 不止是配置文件，而是一整套完整系统：技能体系、本能行为、记忆优化、持续学习、安全扫描，以及研究优先的开发模式。
 包含可直接用于生产环境的智能体、技能模块、钩子、规则、MCP 配置，以及兼容传统命令的适配层——所有内容均经过 10 个多月高强度日常使用与真实产品开发迭代打磨而成。
 
-可在 **Claude Code**、**Codex**、**Cursor**、**OpenCode**、**Gemini** 及其他 AI 智能体框架中通用。
-
 ---
 
 ## 指南
@@ -184,7 +182,7 @@ Copy-Item -Recurse rules/typescript "$HOME/.claude/rules/"
 
 ## 跨平台支持
 
-该插件现已**全面支持 Windows、macOS 和 Linux**，并与主流 IDE（Cursor、OpenCode、Antigravity）及命令行工具深度集成。所有钩子与脚本均已使用 Node.js 重写，以实现最佳兼容性。
+该插件现已**全面支持 Windows、macOS 和 Linux**（针对 Claude Code）。所有钩子与脚本均已使用 Node.js 重写，以实现最佳兼容性。
 
 ### 包管理器检测
 

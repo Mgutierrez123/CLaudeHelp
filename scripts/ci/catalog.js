@@ -113,58 +113,6 @@ function parseReadmeExpectations(readmeContent) {
     source: 'README.md project tree (agents)'
   });
 
-  const tablePatterns = [
-    { category: 'agents', regex: /\|\s*(?:\*\*)?Agents(?:\*\*)?\s*\|\s*(?:(?:PASS:|\u2705)\s*)?(\d+)\s+agents\s*\|/i, source: 'README.md comparison table' },
-    { category: 'commands', regex: /\|\s*(?:\*\*)?Commands(?:\*\*)?\s*\|\s*(?:(?:PASS:|\u2705)\s*)?(\d+)\s+commands(?:\s*\([^)]*\))?\s*\|/i, source: 'README.md comparison table' },
-    { category: 'skills', regex: /\|\s*(?:\*\*)?Skills(?:\*\*)?\s*\|\s*(?:(?:PASS:|\u2705)\s*)?(\d+)\s+skills\s*\|/i, source: 'README.md comparison table' }
-  ];
-
-  for (const pattern of tablePatterns) {
-    const match = readmeContent.match(pattern.regex);
-    if (!match) {
-      throw new Error(`${pattern.source} is missing the ${pattern.category} row`);
-    }
-
-    expectations.push({
-      category: pattern.category,
-      mode: 'exact',
-      expected: Number(match[1]),
-      source: `${pattern.source} (${pattern.category})`
-    });
-  }
-
-  const parityPatterns = [
-    {
-      category: 'agents',
-      regex: /^\|\s*(?:\*\*)?Agents(?:\*\*)?\s*\|\s*(\d+)\s*\|\s*Shared\s*\(AGENTS\.md\)\s*\|\s*Shared\s*\(AGENTS\.md\)\s*\|\s*12\s*\|(?:\s*N\/A\s*\|)?$/im,
-      source: 'README.md parity table'
-    },
-    {
-      category: 'commands',
-      regex: /^\|\s*(?:\*\*)?Commands(?:\*\*)?\s*\|\s*(\d+)\s*\|\s*Shared\s*\|\s*Instruction-based\s*\|\s*\d+\s*\|(?:\s*\d+\s+prompts\s*\|)?$/im,
-      source: 'README.md parity table'
-    },
-    {
-      category: 'skills',
-      regex: /^\|\s*(?:\*\*)?Skills(?:\*\*)?\s*\|\s*(\d+)\s*\|\s*Shared\s*\|\s*10\s*\(native format\)\s*\|\s*37\s*\|(?:\s*Via instructions\s*\|)?$/im,
-      source: 'README.md parity table'
-    }
-  ];
-
-  for (const pattern of parityPatterns) {
-    const match = readmeContent.match(pattern.regex);
-    if (!match) {
-      throw new Error(`${pattern.source} is missing the ${pattern.category} row`);
-    }
-
-    expectations.push({
-      category: pattern.category,
-      mode: 'exact',
-      expected: Number(match[1]),
-      source: `${pattern.source} (${pattern.category})`
-    });
-  }
-
   return expectations;
 }
 
@@ -194,58 +142,6 @@ function parseZhDocsReadmeExpectations(readmeContent) {
     { category: 'skills', mode: 'exact', expected: Number(quickStartMatch[2]), source: 'docs/zh-CN/README.md quick-start summary' },
     { category: 'commands', mode: 'exact', expected: Number(quickStartMatch[3]), source: 'docs/zh-CN/README.md quick-start summary' }
   );
-
-  const tablePatterns = [
-    { category: 'agents', regex: /\|\s*智能体\s*\|\s*(?:(?:PASS:|\u2705)\s*)?(\d+)\s*个\s*\|/i, source: 'docs/zh-CN/README.md comparison table' },
-    { category: 'commands', regex: /\|\s*命令\s*\|\s*(?:(?:PASS:|\u2705)\s*)?(\d+)\s*个\s*\|/i, source: 'docs/zh-CN/README.md comparison table' },
-    { category: 'skills', regex: /\|\s*技能\s*\|\s*(?:(?:PASS:|\u2705)\s*)?(\d+)\s*项\s*\|/i, source: 'docs/zh-CN/README.md comparison table' }
-  ];
-
-  for (const pattern of tablePatterns) {
-    const match = readmeContent.match(pattern.regex);
-    if (!match) {
-      throw new Error(`${pattern.source} is missing the ${pattern.category} row`);
-    }
-
-    expectations.push({
-      category: pattern.category,
-      mode: 'exact',
-      expected: Number(match[1]),
-      source: `${pattern.source} (${pattern.category})`
-    });
-  }
-
-  const parityPatterns = [
-    {
-      category: 'agents',
-      regex: /^\|\s*(?:\*\*)?智能体(?:\*\*)?\s*\|\s*(\d+)\s*\|\s*共享\s*\(AGENTS\.md\)\s*\|\s*共享\s*\(AGENTS\.md\)\s*\|\s*12\s*\|$/im,
-      source: 'docs/zh-CN/README.md parity table'
-    },
-    {
-      category: 'commands',
-      regex: /^\|\s*(?:\*\*)?命令(?:\*\*)?\s*\|\s*(\d+)\s*\|\s*共享\s*\|\s*基于指令\s*\|\s*\d+\s*\|$/im,
-      source: 'docs/zh-CN/README.md parity table'
-    },
-    {
-      category: 'skills',
-      regex: /^\|\s*(?:\*\*)?技能(?:\*\*)?\s*\|\s*(\d+)\s*\|\s*共享\s*\|\s*10\s*\(原生格式\)\s*\|\s*37\s*\|$/im,
-      source: 'docs/zh-CN/README.md parity table'
-    }
-  ];
-
-  for (const pattern of parityPatterns) {
-    const match = readmeContent.match(pattern.regex);
-    if (!match) {
-      throw new Error(`${pattern.source} is missing the ${pattern.category} row`);
-    }
-
-    expectations.push({
-      category: pattern.category,
-      mode: 'exact',
-      expected: Number(match[1]),
-      source: `${pattern.source} (${pattern.category})`
-    });
-  }
 
   return expectations;
 }
@@ -421,42 +317,6 @@ function syncEnglishReadme(content, catalog) {
     (_, prefix, __, suffix) => `${prefix}${catalog.agents.count}${suffix}`,
     'README.md project tree (agents)'
   );
-  nextContent = replaceOrThrow(
-    nextContent,
-    /(\|\s*(?:\*\*)?Agents(?:\*\*)?\s*\|\s*(?:(?:PASS:|\u2705)\s*)?)(\d+)(\s+agents\s*\|)/i,
-    (_, prefix, __, suffix) => `${prefix}${catalog.agents.count}${suffix}`,
-    'README.md comparison table (agents)'
-  );
-  nextContent = replaceOrThrow(
-    nextContent,
-    /(\|\s*(?:\*\*)?Commands(?:\*\*)?\s*\|\s*(?:(?:PASS:|\u2705)\s*)?)(\d+)(\s+commands\s*\|)/i,
-    (_, prefix, __, suffix) => `${prefix}${catalog.commands.count}${suffix}`,
-    'README.md comparison table (commands)'
-  );
-  nextContent = replaceOrThrow(
-    nextContent,
-    /(\|\s*(?:\*\*)?Skills(?:\*\*)?\s*\|\s*(?:(?:PASS:|\u2705)\s*)?)(\d+)(\s+skills\s*\|)/i,
-    (_, prefix, __, suffix) => `${prefix}${catalog.skills.count}${suffix}`,
-    'README.md comparison table (skills)'
-  );
-  nextContent = replaceOrThrow(
-    nextContent,
-    /^(\|\s*(?:\*\*)?Agents(?:\*\*)?\s*\|\s*)(\d+)(\s*\|\s*Shared\s*\(AGENTS\.md\)\s*\|\s*Shared\s*\(AGENTS\.md\)\s*\|\s*12\s*\|(?:\s*N\/A\s*\|)?)$/im,
-    (_, prefix, __, suffix) => `${prefix}${catalog.agents.count}${suffix}`,
-    'README.md parity table (agents)'
-  );
-  nextContent = replaceOrThrow(
-    nextContent,
-    /^(\|\s*(?:\*\*)?Commands(?:\*\*)?\s*\|\s*)(\d+)(\s*\|\s*Shared\s*\|\s*Instruction-based\s*\|\s*\d+\s*\|(?:\s*\d+\s+prompts\s*\|)?)$/im,
-    (_, prefix, __, suffix) => `${prefix}${catalog.commands.count}${suffix}`,
-    'README.md parity table (commands)'
-  );
-  nextContent = replaceOrThrow(
-    nextContent,
-    /^(\|\s*(?:\*\*)?Skills(?:\*\*)?\s*\|\s*)(\d+)(\s*\|\s*Shared\s*\|\s*10\s*\(native format\)\s*\|\s*37\s*\|(?:\s*Via instructions\s*\|)?)$/im,
-    (_, prefix, __, suffix) => `${prefix}${catalog.skills.count}${suffix}`,
-    'README.md parity table (skills)'
-  );
 
   return nextContent;
 }
@@ -512,42 +372,6 @@ function syncZhDocsReadme(content, catalog) {
     (_, prefix, __, agentsSuffix, ___, skillsSuffix, ____, commandsSuffix) =>
       `${prefix}${catalog.agents.count}${agentsSuffix}${catalog.skills.count}${skillsSuffix}${catalog.commands.count}${commandsSuffix}`,
     'docs/zh-CN/README.md quick-start summary'
-  );
-  nextContent = replaceOrThrow(
-    nextContent,
-    /(\|\s*智能体\s*\|\s*(?:(?:PASS:|\u2705)\s*)?)(\d+)(\s*个\s*\|)/i,
-    (_, prefix, __, suffix) => `${prefix}${catalog.agents.count}${suffix}`,
-    'docs/zh-CN/README.md comparison table (agents)'
-  );
-  nextContent = replaceOrThrow(
-    nextContent,
-    /(\|\s*命令\s*\|\s*(?:(?:PASS:|\u2705)\s*)?)(\d+)(\s*个\s*\|)/i,
-    (_, prefix, __, suffix) => `${prefix}${catalog.commands.count}${suffix}`,
-    'docs/zh-CN/README.md comparison table (commands)'
-  );
-  nextContent = replaceOrThrow(
-    nextContent,
-    /(\|\s*技能\s*\|\s*(?:(?:PASS:|\u2705)\s*)?)(\d+)(\s*项\s*\|)/i,
-    (_, prefix, __, suffix) => `${prefix}${catalog.skills.count}${suffix}`,
-    'docs/zh-CN/README.md comparison table (skills)'
-  );
-  nextContent = replaceOrThrow(
-    nextContent,
-    /^(\|\s*(?:\*\*)?智能体(?:\*\*)?\s*\|\s*)(\d+)(\s*\|\s*共享\s*\(AGENTS\.md\)\s*\|\s*共享\s*\(AGENTS\.md\)\s*\|\s*12\s*\|)$/im,
-    (_, prefix, __, suffix) => `${prefix}${catalog.agents.count}${suffix}`,
-    'docs/zh-CN/README.md parity table (agents)'
-  );
-  nextContent = replaceOrThrow(
-    nextContent,
-    /^(\|\s*(?:\*\*)?命令(?:\*\*)?\s*\|\s*)(\d+)(\s*\|\s*共享\s*\|\s*基于指令\s*\|\s*\d+\s*\|)$/im,
-    (_, prefix, __, suffix) => `${prefix}${catalog.commands.count}${suffix}`,
-    'docs/zh-CN/README.md parity table (commands)'
-  );
-  nextContent = replaceOrThrow(
-    nextContent,
-    /^(\|\s*(?:\*\*)?技能(?:\*\*)?\s*\|\s*)(\d+)(\s*\|\s*共享\s*\|\s*10\s*\(原生格式\)\s*\|\s*37\s*\|)$/im,
-    (_, prefix, __, suffix) => `${prefix}${catalog.skills.count}${suffix}`,
-    'docs/zh-CN/README.md parity table (skills)'
   );
 
   return nextContent;

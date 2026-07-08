@@ -266,11 +266,9 @@ test('.mcp.json does not reintroduce retired default connectors', () => {
   }
 });
 
-test('README version row matches package.json', () => {
+test('README latest release heading matches package.json', () => {
   const readme = fs.readFileSync(path.join(repoRoot, 'README.md'), 'utf8');
-  const match = readme.match(new RegExp(`^\\| \\*\\*Version\\*\\* \\| Plugin \\| Plugin \\| Reference config \\| (${semverPattern}) \\|(?: Instruction layer \\|)?$`, 'm'));
-  assert.ok(match, 'Expected README version summary row');
-  assert.strictEqual(match[1], expectedVersion);
+  assert.ok(readme.includes(`### v${expectedVersion} `), 'Expected README.md to advertise the current release heading');
 });
 
 test('user-facing docs do not use overlong legacy marketplace install commands', () => {
@@ -304,13 +302,6 @@ test('user-facing docs do not use the legacy non-URL marketplace add form', () =
   }
 
   assert.deepStrictEqual(offenders, [], `Legacy non-URL marketplace add form must not appear in user-facing docs: ${offenders.join(', ')}`);
-});
-
-test('docs/zh-CN/README.md version row matches package.json', () => {
-  const readme = fs.readFileSync(zhCnReadmePath, 'utf8');
-  const match = readme.match(new RegExp(`^\\| \\*\\*版本\\*\\* \\| 插件 \\| 插件 \\| 参考配置 \\| (${semverPattern}) \\|$`, 'm'));
-  assert.ok(match, 'Expected docs/zh-CN/README.md version summary row');
-  assert.strictEqual(match[1], expectedVersion);
 });
 
 // ── Summary ───────────────────────────────────────────────────────────────────
