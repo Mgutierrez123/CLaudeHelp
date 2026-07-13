@@ -65,7 +65,6 @@ function buildExpectedPublishPaths(repoRoot) {
     "scripts/release-video-suite.js",
     "scripts/skill-create-output.js",
     "scripts/repair.js",
-    "scripts/harness-adapter-compliance.js",
     "scripts/session-inspect.js",
     "scripts/uninstall.js",
     "plugins/ecc",
