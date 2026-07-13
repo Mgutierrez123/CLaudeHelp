@@ -1139,11 +1139,9 @@ Jede Komponente ist vollständig unabhängig.
 </details>
 
 <details>
-<summary><b>Funktioniert das mit Cursor / OpenCode / Codex / Antigravity?</b></summary>
+<summary><b>Funktioniert das mit Cursor / OpenCode / Codex / Antigravity / GitHub Copilot?</b></summary>
 
-Nein. Dieser Fork ist ausschließlich auf **Claude Code** beschränkt — `claude` (Home, `~/.claude/`) und `claude-project` (projektbezogen, `./.claude/`) sind die einzigen Installationsziele. Die Unterstützung für andere Harnesses (Cursor, Codex, OpenCode, Antigravity, JoyCode, CodeBuddy, Qwen CLI, Zed, Gemini CLI) wurde entfernt, damit sich Installer und Skill-/Agent-Oberfläche auf ein einziges Harness konzentrieren.
-
-Die einzige Ausnahme ist **GitHub Copilot (VS Code)**, das über statische Instruction-Dateien (`.github/copilot-instructions.md`, `.vscode/settings.json`) funktioniert statt über den Installer dieses Repos — siehe [GitHub-Copilot-Unterstützung](#github-copilot-unterstützung).
+Nein. Dieser Fork ist ausschließlich auf **Claude Code** beschränkt — `claude` (Home, `~/.claude/`) und `claude-project` (projektbezogen, `./.claude/`) sind die einzigen Installationsziele. Die Unterstützung für andere Harnesses (Cursor, Codex, OpenCode, Antigravity, JoyCode, CodeBuddy, Qwen CLI, Zed, Gemini CLI, GitHub Copilot) wurde entfernt, damit sich Installer und Skill-/Agent-Oberfläche auf ein einziges Harness konzentrieren.
 </details>
 
 <details>
@@ -1201,62 +1199,6 @@ Diese werden nicht mit ECC mitgeliefert und nicht von diesem Repo auditiert, abe
 - [claude-seo](https://github.com/AgriciDaniel/claude-seo) — SEO-fokussierte Skill- und Agent-Sammlung
 - [claude-ads](https://github.com/AgriciDaniel/claude-ads) — Sammlung von Ad-Audit- und Paid-Growth-Workflows
 - [claude-cybersecurity](https://github.com/AgriciDaniel/claude-cybersecurity) — sicherheitsorientierte Skill- und Agent-Sammlung
-
----
-
-## GitHub-Copilot-Unterstützung
-
-ECC bietet **GitHub-Copilot-Unterstützung** für VS Code über das native Instruction- und Prompt-Datei-System von Copilot Chat — kein zusätzliches Tooling erforderlich.
-
-### Was ist enthalten
-
-| Komponente | Datei | Zweck |
-|-----------|------|---------|
-| Kern-Instructions | `.github/copilot-instructions.md` | Stets geladene Rules: Coding-Style, Sicherheit, Testing, Git-Workflow |
-| VS-Code-Einstellungen | `.vscode/settings.json` | Aufgabenspezifische Instruction-Dateien für Codegenerierung, Testgenerierung und Commit-Nachrichten |
-| Plan-Prompt | `.github/prompts/plan.prompt.md` | Phasenweise Implementierungsplanung |
-| TDD-Prompt | `.github/prompts/tdd.prompt.md` | Red-Green-Improve-Zyklus |
-| Security-Review-Prompt | `.github/prompts/security-review.prompt.md` | Tiefe, OWASP-orientierte Sicherheitsanalyse |
-| Build-Fix-Prompt | `.github/prompts/build-fix.prompt.md` | Systematische Behebung von Build- und CI-Fehlern |
-| Refactor-Prompt | `.github/prompts/refactor.prompt.md` | Beseitigung von totem Code und Vereinfachung |
-
-### Schnellstart (GitHub Copilot)
-
-Die Dateien sind bereits vorhanden — öffne ein beliebiges Repo, das dieses Projekt enthält, und GitHub Copilot Chat nimmt `.github/copilot-instructions.md` automatisch auf.
-Die eingecheckte `.vscode/settings.json` aktiviert `chat.promptFiles`, sodass VS Code die wiederverwendbaren Prompts aus `.github/prompts/` laden kann.
-
-So verwendest du die Workflow-Prompts in Copilot Chat:
-1. Öffne das Copilot-Chat-Panel in VS Code.
-2. Klicke auf das **Büroklammer-/Anhängen-Symbol** und wähle **Prompt...**, oder tippe `/` und wähle einen Prompt.
-3. Wähle den Prompt aus (z. B. `plan`, `tdd`, `security-review`).
-
-### Wie es funktioniert
-
-GitHub Copilot in VS Code liest zwei Dateitypen automatisch:
-
-- **`.github/copilot-instructions.md`** — Instructions auf Repository-Ebene, die in jede Copilot-Chat-Anfrage injiziert werden. Enthält ECCs Kern-Coding-Standards, Sicherheits-Checkliste, Testanforderungen und Git-Workflow.
-- **`.github/prompts/*.prompt.md`** — wiederverwendbare Prompt-Dateien, die Nutzer bei Bedarf aufrufen. Jeder Prompt führt Copilot durch einen bestimmten ECC-Workflow wie Planung, TDD, Security-Review, Build-Fix oder Refactor.
-
-Die **`.vscode/settings.json`** fügt aufgabenspezifische Instruction-Overlays hinzu, sodass Copilot für Codegenerierung, Testgenerierung und Commit-Nachrichten den richtigen Kontext erhält.
-
-### Feature-Abdeckung
-
-| ECC-Feature | Copilot-Entsprechung |
-|-------------|-------------------|
-| Coding-Standards | Stets aktiv über `copilot-instructions.md` |
-| Sicherheits-Checkliste | Stets aktiv + `security-review`-Prompt |
-| Testing / TDD | Stets aktiv + `tdd`-Prompt |
-| Implementierungsplanung | `plan`-Prompt |
-| Code-Review | Externes PR-Review über CodeRabbit + Greptile |
-| Behebung von Build-Fehlern | `build-fix`-Prompt |
-| Refactoring | `refactor`-Prompt |
-| Commit-Nachrichten-Format | Aufgabenspezifische Instruction in `settings.json` |
-| Hooks / Automatisierung | Nicht unterstützt (Copilot hat kein Hook-System) |
-| Agents / Delegation | Nicht unterstützt (Copilot hat keine Subagent-API) |
-
-### Einschränkungen
-
-GitHub Copilot hat kein Hook-System und keine Subagent-API, daher sind ECCs Hook-Automatisierungen (Auto-Formatierung, TypeScript-Prüfung, Session-Persistenz, Dev-Server-Guard) sowie die Agent-Delegation nicht verfügbar. Die Instruction- und Prompt-Schicht bringt dennoch die vollständige ECC-Coding-Philosophie — Standards, Sicherheit, TDD und Workflow — in jede Copilot-Chat-Session.
 
 ---
 
