@@ -45,8 +45,8 @@ until the underlying module graph is split more finely.
    - framework packs
    - capability packs
    - target/platform configs
-3. Keep one consistent UX across Claude, Cursor, Antigravity, Codex, and
-   OpenCode.
+3. Keep one consistent UX across the `claude` (home) and `claude-project`
+   (per-project) install targets.
 4. Keep installs inspectable, repairable, and uninstallable.
 5. Preserve backward compatibility with the current `ecc-install typescript`
    style during rollout.
@@ -87,7 +87,7 @@ The user should not have to know raw internal repo paths.
 Every install path should support dry-run planning:
 
 ```bash
-ecc install --target cursor --profile developer --with lang:typescript --with framework:nextjs --dry-run
+ecc install --target claude-project --profile developer --with lang:typescript --with framework:nextjs --dry-run
 ```
 
 The plan should clearly show:
@@ -236,8 +236,8 @@ Examples:
 
 ```bash
 ecc install --target claude --profile core
-ecc install --target cursor --profile developer --with lang:typescript --with framework:nextjs
-ecc install --target antigravity --with capability:security --with lang:python
+ecc install --target claude-project --profile developer --with lang:typescript --with framework:nextjs
+ecc install --target claude --with capability:security --with lang:python
 ecc install --config ecc-install.json
 ```
 
@@ -276,7 +276,7 @@ These legacy flows should still work during migration:
 
 ```bash
 ecc-install typescript
-ecc-install --target cursor typescript
+ecc-install --target claude-project typescript
 ecc typescript
 ```
 
@@ -301,7 +301,7 @@ Optional future support:
 {
   "$schema": "./schemas/ecc-install-config.schema.json",
   "version": 1,
-  "target": "cursor",
+  "target": "claude-project",
   "profile": "developer",
   "include": [
     "lang:typescript",
@@ -323,7 +323,7 @@ Optional future support:
 ### Field Semantics
 
 - `target`
-  selected harness target such as `claude`, `cursor`, or `antigravity`
+  selected install target: `claude` (home) or `claude-project` (per-project)
 - `profile`
   baseline profile to start from
 - `include`
@@ -367,35 +367,22 @@ The commands differ in action, not in how ECC understands the selected install.
 
 ## Target Behavior
 
-Selective install should preserve the same conceptual component graph across all
-targets, while letting target adapters decide how content lands.
+Selective install should preserve the same conceptual component graph across
+both targets, while letting each target adapter decide how content lands.
 
-### Claude
+### Claude (home)
 
 Best fit for:
 
 - home-scoped ECC baseline
 - commands, agents, rules, hooks, platform config, orchestration
 
-### Cursor
+### Claude Project
 
 Best fit for:
 
 - project-scoped installs
 - rules plus project-local automation and config
-
-### Antigravity
-
-Best fit for:
-
-- project-scoped agent/rule/workflow installs
-
-### Codex / OpenCode
-
-Should remain additive targets rather than special forks of the installer.
-
-The selective-install design should make these just new adapters plus new
-target-specific mapping rules, not new installer architectures.
 
 ## Technical Feasibility
 

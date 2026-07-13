@@ -122,7 +122,7 @@ Consult ECC install components and profiles from any project
 
 Usage:
   node scripts/consult.js "security reviews" [--target <target>] [--limit <n>] [--json]
-  node scripts/consult.js security reviews --target codex
+  node scripts/consult.js security reviews --target claude-project
 
 Options:
   --target <target>  Install target to include in suggested commands. Default: ${DEFAULT_TARGET}
@@ -132,8 +132,8 @@ Options:
 
 Examples:
   node scripts/consult.js "security reviews"
-  node scripts/consult.js "Next.js React app" --target cursor
-  node scripts/consult.js "operator workflows" --target codex --json
+  node scripts/consult.js "Next.js React app" --target claude-project
+  node scripts/consult.js "operator workflows" --target claude --json
 `);
 
   process.exit(exitCode);
