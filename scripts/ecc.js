@@ -122,14 +122,14 @@ Global Flags:
 Examples:
   ecc typescript
   ecc install --profile developer --target claude
-  ecc plan --profile core --target cursor
+  ecc plan --profile core --target claude
   ecc catalog profiles
   ecc catalog components --family language
   ecc catalog show framework:nextjs
   ecc consult "security reviews"
   ecc control-pane --port 8765
   ecc list-installed --json
-  ecc doctor --target cursor
+  ecc doctor --target claude
   ecc repair --dry-run
   ecc auto-update --dry-run
   ecc status --json
@@ -143,7 +143,7 @@ Examples:
   ecc work-items sync-github --repo affaan-m/ECC
   ecc session-inspect claude:latest
   ecc loop-status --json
-  ecc uninstall --target antigravity --dry-run
+  ecc uninstall --target claude --dry-run
 `);
 
   process.exit(exitCode);

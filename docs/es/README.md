@@ -38,9 +38,9 @@
 
 No son solo configuraciones. Es un sistema completo: skills, instintos, optimización de memoria, aprendizaje continuo, análisis de seguridad y desarrollo orientado a la investigación. Agentes listos para producción, skills, hooks, reglas, configuraciones de MCP y comandos legados, evolucionados durante más de 10 meses de uso diario intensivo construyendo productos reales.
 
-Funciona en **Codex**, **Claude Code**, **Cursor**, **OpenCode**, **Gemini**, **Zed**, **GitHub Copilot** y otros harnesses de agentes de IA.
+Este fork está enfocado en **Claude Code únicamente**.
 
-ECC v2.0.0-rc.1 añade la historia pública del operador Hermes sobre esa capa reutilizable: comienza con la [guía de configuración de Hermes](../HERMES-SETUP.md), luego revisa las [notas de la versión rc.1](../releases/2.0.0-rc.1/release-notes.md) y la [arquitectura multi-harness](../architecture/cross-harness.md).
+ECC v2.0.0-rc.1 añade la historia pública del operador Hermes sobre esa capa reutilizable: comienza con la [guía de configuración de Hermes](../HERMES-SETUP.md) y revisa las [notas de la versión rc.1](../releases/2.0.0-rc.1/release-notes.md).
 
 ---
 
@@ -1002,11 +1002,9 @@ Cada componente es completamente independiente.
 </details>
 
 <details>
-<summary><b>¿Funciona con Cursor / OpenCode / Codex / Antigravity?</b></summary>
+<summary><b>¿Funciona con Cursor / OpenCode / Codex / Antigravity / GitHub Copilot?</b></summary>
 
-No. Este fork está limitado a **Claude Code únicamente** — `claude` (home, `~/.claude/`) y `claude-project` (por proyecto, `./.claude/`) son los únicos targets de instalación. El soporte para otros harnesses (Cursor, Codex, OpenCode, Antigravity, JoyCode, CodeBuddy, Qwen CLI, Zed, Gemini CLI) fue eliminado para mantener el instalador y la superficie de skills/agentes enfocados en un solo harness.
-
-La única excepción es **GitHub Copilot (VS Code)**, que funciona mediante archivos de instrucciones estáticos (`.github/copilot-instructions.md`, `.vscode/settings.json`) en vez del instalador de este repo — consulta [Soporte para GitHub Copilot](#soporte-para-github-copilot).
+No. Este fork está limitado a **Claude Code únicamente** — `claude` (home, `~/.claude/`) y `claude-project` (por proyecto, `./.claude/`) son los únicos targets de instalación. El soporte para otros harnesses (Cursor, Codex, OpenCode, Antigravity, JoyCode, CodeBuddy, Qwen CLI, Zed, Gemini CLI, GitHub Copilot) fue eliminado para mantener el instalador y la superficie de skills/agentes enfocados en un solo harness.
 </details>
 
 <details>
@@ -1064,34 +1062,6 @@ Estos no están empaquetados con ECC y no son auditados por este repo, pero vale
 - [claude-seo](https://github.com/AgriciDaniel/claude-seo) — Colección de skills y agentes centrados en SEO
 - [claude-ads](https://github.com/AgriciDaniel/claude-ads) — Colección de flujos de trabajo de auditoría de anuncios y crecimiento de pago
 - [claude-cybersecurity](https://github.com/AgriciDaniel/claude-cybersecurity) — Colección de skills y agentes orientados a seguridad
-
----
-
-## Soporte para GitHub Copilot
-
-ECC proporciona **soporte para GitHub Copilot** para VS Code mediante el sistema nativo de archivos de instrucciones y prompts de Copilot Chat — sin herramientas adicionales necesarias.
-
-### Qué Incluye
-
-| Componente | Archivo | Propósito |
-|------------|---------|-----------|
-| Instrucciones principales | `.github/copilot-instructions.md` | Reglas siempre cargadas: estilo de código, seguridad, pruebas, flujo de git |
-| Configuración de VS Code | `.vscode/settings.json` | Archivos de instrucciones por tarea para generación de código, pruebas y mensajes de commit |
-| Prompt de plan | `.github/prompts/plan.prompt.md` | Planificación de implementación por fases |
-| Prompt de TDD | `.github/prompts/tdd.prompt.md` | Ciclo Rojo-Verde-Mejorar |
-| Prompt de revisión de seguridad | `.github/prompts/security-review.prompt.md` | Análisis de seguridad profundo alineado con OWASP |
-| Prompt de corrección de build | `.github/prompts/build-fix.prompt.md` | Resolución sistemática de errores de build y CI |
-| Prompt de refactorización | `.github/prompts/refactor.prompt.md` | Limpieza de código muerto y simplificación |
-
-### Inicio Rápido (GitHub Copilot)
-
-Los archivos ya están en su lugar — abre cualquier repo que contenga este proyecto y GitHub Copilot Chat recogerá automáticamente `.github/copilot-instructions.md`.
-El `.vscode/settings.json` confirmado habilita `chat.promptFiles` para que VS Code pueda cargar los prompts reutilizables de `.github/prompts/`.
-
-Para usar los prompts de flujo de trabajo en Copilot Chat:
-1. Abre el panel de Copilot Chat en VS Code.
-2. Haz clic en el icono de **clip / adjuntar** y selecciona **Prompt...**, o escribe `/` y elige un prompt.
-3. Selecciona el prompt (por ejemplo, `plan`, `tdd`, `security-review`).
 
 ---
 

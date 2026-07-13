@@ -37,9 +37,9 @@
 
 صرف کنفیگریشن نہیں۔ ایک مکمل نظام: skills، instincts، میموری آپٹیمائزیشن، مسلسل سیکھنا، سیکیورٹی اسکیننگ، اور research-first ڈیویلپمنٹ۔ 10+ مہینوں کی گہری روزانہ استعمال سے تیار کیے گئے پروڈکشن-ریڈی agents، skills، hooks، rules، MCP کنفیگریشن، اور legacy command shims۔
 
-**Claude Code**، **Codex**، **Cursor**، **OpenCode**، **Gemini**، **Zed**، **GitHub Copilot**، اور دیگر AI ایجنٹ ہارنسز پر کام کرتا ہے۔
+یہ فورک صرف **Claude Code** پر مرکوز ہے۔
 
-ECC v2.0.0-rc.1 اس قابل استعمال پرت پر عوامی Hermes آپریٹر کہانی شامل کرتا ہے: [Hermes سیٹ اپ گائیڈ](../../docs/HERMES-SETUP.md) سے شروع کریں، پھر [rc.1 ریلیز نوٹس](../../docs/releases/2.0.0-rc.1/release-notes.md) اور [کراس-ہارنس آرکیٹیکچر](../../docs/architecture/cross-harness.md) دیکھیں۔
+ECC v2.0.0-rc.1 اس قابل استعمال پرت پر عوامی Hermes آپریٹر کہانی شامل کرتا ہے: [Hermes سیٹ اپ گائیڈ](../../docs/HERMES-SETUP.md) سے شروع کریں، پھر [rc.1 ریلیز نوٹس](../../docs/releases/2.0.0-rc.1/release-notes.md) دیکھیں۔
 
 ---
 
@@ -290,9 +290,9 @@ mkdir -p ~/.claude/rules/ecc/
 cp -r rules/common ~/.claude/rules/ecc/
 ```
 
-**کیا یہ Cursor / OpenCode / Codex کے ساتھ کام کرتا ہے؟**
+**کیا یہ Cursor / OpenCode / Codex / GitHub Copilot کے ساتھ کام کرتا ہے؟**
 
-ہاں۔ ECC کراس-پلیٹ فارم ہے — Claude Code، Cursor، OpenCode، Codex، GitHub Copilot، Gemini، Zed، اور مزید کے ساتھ۔
+نہیں۔ یہ فورک صرف **Claude Code** تک محدود ہے۔ دیگر ہارنسز (Cursor، OpenCode، Codex، GitHub Copilot، Gemini، Zed) کے لیے سپورٹ ختم کر دیا گیا ہے۔
 
 ---
 

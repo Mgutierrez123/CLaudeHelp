@@ -1211,11 +1211,9 @@ Each component is fully independent.
 </details>
 
 <details>
-<summary><b>Does this work with Cursor / OpenCode / Codex / Antigravity?</b></summary>
+<summary><b>Does this work with Cursor / OpenCode / Codex / Antigravity / GitHub Copilot?</b></summary>
 
-No. This fork is scoped to **Claude Code only** — `claude` (home, `~/.claude/`) and `claude-project` (per-project, `./.claude/`) are the only install targets. Support for other harnesses (Cursor, Codex, OpenCode, Antigravity, JoyCode, CodeBuddy, Qwen CLI, Zed, Gemini CLI) has been removed to keep the installer and skill/agent surface focused on a single harness.
-
-The only exception is **GitHub Copilot (VS Code)**, which works through static instruction files (`.github/copilot-instructions.md`, `.vscode/settings.json`) rather than this repo's installer — see [GitHub Copilot Support](#github-copilot-support).
+No. This fork is scoped to **Claude Code only** — `claude` (home, `~/.claude/`) and `claude-project` (per-project, `./.claude/`) are the only install targets. Support for other harnesses (Cursor, Codex, OpenCode, Antigravity, JoyCode, CodeBuddy, Qwen CLI, Zed, Gemini CLI, GitHub Copilot) has been removed to keep the installer and skill/agent surface focused on a single harness.
 </details>
 
 <details>
@@ -1265,62 +1263,6 @@ Please contribute! See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 - DevOps agents (Kubernetes, Terraform, AWS, Docker)
 - Testing strategies (different frameworks, visual regression)
 - Domain-specific knowledge (ML, data engineering, mobile)
-
----
-
-## GitHub Copilot Support
-
-ECC provides **GitHub Copilot support** for VS Code via Copilot Chat's native instruction and prompt file system — no extra tooling required.
-
-### What's Included
-
-| Component | File | Purpose |
-|-----------|------|---------|
-| Core instructions | `.github/copilot-instructions.md` | Always-loaded rules: coding style, security, testing, git workflow |
-| VS Code settings | `.vscode/settings.json` | Per-task instruction files for code gen, test gen, and commit messages |
-| Plan prompt | `.github/prompts/plan.prompt.md` | Phased implementation planning |
-| TDD prompt | `.github/prompts/tdd.prompt.md` | Red-Green-Improve cycle |
-| Security review prompt | `.github/prompts/security-review.prompt.md` | Deep OWASP-aligned security analysis |
-| Build fix prompt | `.github/prompts/build-fix.prompt.md` | Systematic build and CI error resolution |
-| Refactor prompt | `.github/prompts/refactor.prompt.md` | Dead code cleanup and simplification |
-
-### Quick Start (GitHub Copilot)
-
-The files are already in place — open any repo that contains this project and GitHub Copilot Chat will automatically pick up `.github/copilot-instructions.md`.
-The committed `.vscode/settings.json` enables `chat.promptFiles` so VS Code can load the reusable prompts from `.github/prompts/`.
-
-To use the workflow prompts in Copilot Chat:
-1. Open the Copilot Chat panel in VS Code.
-2. Click the **paperclip / attach** icon and select **Prompt...**, or type `/` and choose a prompt.
-3. Select the prompt (e.g. `plan`, `tdd`, `security-review`).
-
-### How It Works
-
-GitHub Copilot in VS Code reads two types of files automatically:
-
-- **`.github/copilot-instructions.md`** — repository-level instructions, always injected into every Copilot Chat request. Contains ECC's core coding standards, security checklist, testing requirements, and git workflow.
-- **`.github/prompts/*.prompt.md`** — reusable prompt files users invoke on demand. Each prompt walks Copilot through a specific ECC workflow such as planning, TDD, security review, build-fix, or refactor.
-
-The **`.vscode/settings.json`** adds per-task instruction overlays so Copilot receives the right context for code generation, test generation, and commit message drafting.
-
-### Feature Coverage
-
-| ECC Feature | Copilot equivalent |
-|-------------|-------------------|
-| Coding standards | Always-on via `copilot-instructions.md` |
-| Security checklist | Always-on + `security-review` prompt |
-| Testing / TDD | Always-on + `tdd` prompt |
-| Implementation planning | `plan` prompt |
-| Code review | External PR review via CodeRabbit + Greptile |
-| Build error resolution | `build-fix` prompt |
-| Refactoring | `refactor` prompt |
-| Commit message format | Per-task instruction in `settings.json` |
-| Hooks / automation | Not supported (Copilot has no hook system) |
-| Agents / delegation | Not supported (Copilot has no subagent API) |
-
-### Limitations
-
-GitHub Copilot does not have a hook system or a subagent API, so ECC's hook automations (auto-format, TypeScript check, session persistence, dev-server guard) and agent delegation are unavailable. The instruction and prompt layer still brings the full ECC coding philosophy — standards, security, TDD, and workflow — into every Copilot Chat session.
 
 ---
 

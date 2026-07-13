@@ -16,8 +16,6 @@ const {
   buildInventory
 } = require('../../scripts/lib/mcp-inventory/canonical-mcp');
 const { readClaudeCodeMcp } = require('../../scripts/lib/mcp-inventory/readers/claude-code');
-const { readCodexMcp } = require('../../scripts/lib/mcp-inventory/readers/codex');
-const { readOpencodeMcp } = require('../../scripts/lib/mcp-inventory/readers/opencode');
 const { collectMcpInventory } = require('../../scripts/lib/mcp-inventory/collect');
 const { formatHumanReport, parseArgs, usage, main } = require('../../scripts/mcp-inventory');
 
@@ -137,90 +135,33 @@ test('claude-code reader parses ~/.claude.json mcpServers + project .mcp.json', 
   assert.strictEqual(records.find(r => r.name === 'localtool').source.scope, 'project');
 });
 
-test('codex reader parses [mcp_servers.*] TOML tables', () => {
+test('collectMcpInventory merges scopes, detects fragmentation + drift, redacts secrets', () => {
   const home = tmpHome();
-  fs.mkdirSync(path.join(home, '.codex'), { recursive: true });
-  fs.writeFileSync(path.join(home, '.codex', 'config.toml'), [
-    '[mcp_servers.github]',
-    'command = "npx"',
-    'args = ["-y", "@modelcontextprotocol/server-github"]',
-    '',
-    '[mcp_servers.github.env]',
-    'GITHUB_PERSONAL_ACCESS_TOKEN = "ghp_codex_secret"',
-    '',
-    '[mcp_servers.remotehub]',
-    'url = "https://mcp.example.com/sse"'
-  ].join('\n'), 'utf8');
-
-  const records = readCodexMcp({ homeDir: home });
-  const github = records.find(r => r.name === 'github');
-  const remote = records.find(r => r.name === 'remotehub');
-  assert.ok(github, 'parses stdio server');
-  assert.strictEqual(github.command, 'npx');
-  assert.strictEqual(github.source.harness, 'codex');
-  assert.ok(remote && remote.url === 'https://mcp.example.com/sse', 'parses http/url server');
-});
-
-test('opencode reader splits command array and reads environment', () => {
-  const home = tmpHome();
-  fs.mkdirSync(path.join(home, '.config', 'opencode'), { recursive: true });
-  fs.writeFileSync(path.join(home, '.config', 'opencode', 'opencode.json'), JSON.stringify({
-    mcp: {
-      github: {
-        type: 'local',
-        command: ['npx', '-y', '@modelcontextprotocol/server-github'],
-        environment: { GITHUB_TOKEN: 'github_pat_secret' },
-        enabled: true
-      },
-      disabledtool: { type: 'local', command: ['foo'], enabled: false }
-    }
-  }), 'utf8');
-
-  const records = readOpencodeMcp({ homeDir: home });
-  const github = records.find(r => r.name === 'github');
-  assert.strictEqual(github.command, 'npx');
-  assert.deepStrictEqual(github.args, ['-y', '@modelcontextprotocol/server-github']);
-  assert.deepStrictEqual(Object.keys(github.env), ['GITHUB_TOKEN']);
-  assert.strictEqual(records.find(r => r.name === 'disabledtool').enabled, false);
-});
-
-test('collectMcpInventory merges harnesses, detects fragmentation + drift, redacts secrets', () => {
-  const home = tmpHome();
-  // claude + opencode agree on github (consistent); codex github uses a
-  // different command (drift). github appears in all 3 => fragmentation x3.
+  // user-scope and project-scope both configure github with drifting args =>
+  // fragmentation x2.
   fs.writeFileSync(path.join(home, '.claude.json'), JSON.stringify({
     mcpServers: { github: { ...GITHUB_STDIO, env: { GITHUB_PERSONAL_ACCESS_TOKEN: 'ghp_secret_claude' } } }
   }), 'utf8');
-  fs.mkdirSync(path.join(home, '.config', 'opencode'), { recursive: true });
-  fs.writeFileSync(path.join(home, '.config', 'opencode', 'opencode.json'), JSON.stringify({
-    mcp: { github: { type: 'local', command: ['npx', '-y', '@modelcontextprotocol/server-github'] } }
+  const projectFile = path.join(home, '.mcp.json');
+  fs.writeFileSync(projectFile, JSON.stringify({
+    mcpServers: { github: { command: 'docker', args: ['run', 'ghcr.io/github/mcp'], type: 'stdio' }, solo: { command: 'node', type: 'stdio' } }
   }), 'utf8');
-  fs.mkdirSync(path.join(home, '.codex'), { recursive: true });
-  fs.writeFileSync(path.join(home, '.codex', 'config.toml'), [
-    '[mcp_servers.github]',
-    'command = "docker"',
-    'args = ["run", "ghcr.io/github/mcp"]',
-    '[mcp_servers.solo]',
-    'command = "node"'
-  ].join('\n'), 'utf8');
 
   const inventory = collectMcpInventory({
-    readerOptions: { 'claude-code': { homeDir: home }, codex: { homeDir: home }, opencode: { homeDir: home } }
+    readerOptions: { 'claude-code': { homeDir: home, projectConfigPaths: [projectFile] } }
   });
 
   assert.strictEqual(inventory.schemaVersion, MCP_SCHEMA_VERSION);
   assert.ok(!JSON.stringify(inventory).includes('ghp_secret_claude'), 'no secret values in inventory');
 
   const github = inventory.servers.find(s => s.name === 'github');
-  assert.strictEqual(github.harnessCount, 3);
-  assert.strictEqual(github.consistent, false, 'codex docker command should flag drift');
+  assert.strictEqual(github.harnessCount, 2);
+  assert.strictEqual(github.consistent, false, 'project docker command should flag drift against user npx config');
 
   const frag = inventory.fragmentation.find(f => f.name === 'github');
-  assert.strictEqual(frag.harnessCount, 3);
-  assert.deepStrictEqual(frag.harnesses.sort(), ['claude-code', 'codex', 'opencode']);
+  assert.strictEqual(frag.harnessCount, 2);
 
   assert.strictEqual(inventory.aggregates.serverCount, 2);
-  assert.strictEqual(inventory.aggregates.harnessCount, 3);
   assert.strictEqual(inventory.aggregates.duplicateServerCount, 1);
   assert.strictEqual(inventory.aggregates.inconsistentServerCount, 1);
 });
@@ -228,12 +169,11 @@ test('collectMcpInventory merges harnesses, detects fragmentation + drift, redac
 test('CLI parseArgs + human report render fragmentation', () => {
   assert.deepStrictEqual(parseArgs(['node', 's', '--json']), { json: true, fragmentedOnly: false, help: false });
   const inventory = buildInventory([
-    normalizeServerEntry({ name: 'github', ...GITHUB_STDIO, source: { harness: 'claude-code' } }),
-    normalizeServerEntry({ name: 'github', ...GITHUB_STDIO, source: { harness: 'codex' } })
+    normalizeServerEntry({ name: 'github', ...GITHUB_STDIO, source: { harness: 'claude-code', scope: 'user' } }),
+    normalizeServerEntry({ name: 'github', ...GITHUB_STDIO, source: { harness: 'claude-code', scope: 'project' } })
   ]);
   const report = formatHumanReport(inventory);
   assert.ok(report.includes('github'), 'report names the fragmented server');
-  assert.ok(report.includes('x2'), 'report shows the harness count');
 });
 
 
@@ -254,29 +194,12 @@ function captureStdout(fn) {
 test('readers return [] for missing files, malformed JSON, and missing blocks', () => {
   const home = tmpHome();
   assert.deepStrictEqual(readClaudeCodeMcp({ homeDir: home }), []);
-  assert.deepStrictEqual(readCodexMcp({ homeDir: home }), []);
-  assert.deepStrictEqual(readOpencodeMcp({ homeDir: home }), []);
 
   fs.writeFileSync(path.join(home, '.claude.json'), '{not valid json', 'utf8');
   assert.deepStrictEqual(readClaudeCodeMcp({ homeDir: home }), []);
 
   fs.writeFileSync(path.join(home, '.claude.json'), JSON.stringify({ other: true }), 'utf8');
   assert.deepStrictEqual(readClaudeCodeMcp({ homeDir: home }), []);
-
-  fs.mkdirSync(path.join(home, '.config', 'opencode'), { recursive: true });
-  fs.writeFileSync(path.join(home, '.config', 'opencode', 'opencode.json'), 'nope', 'utf8');
-  assert.deepStrictEqual(readOpencodeMcp({ homeDir: home }), []);
-
-  fs.mkdirSync(path.join(home, '.codex'), { recursive: true });
-  fs.writeFileSync(path.join(home, '.codex', 'config.toml'), 'this = = broken', 'utf8');
-  assert.deepStrictEqual(readCodexMcp({ homeDir: home }), []);
-});
-
-test('codex reader returns [] when no TOML parser is available', () => {
-  const home = tmpHome();
-  fs.mkdirSync(path.join(home, '.codex'), { recursive: true });
-  fs.writeFileSync(path.join(home, '.codex', 'config.toml'), '[mcp_servers.x]\ncommand = "node"\n', 'utf8');
-  assert.deepStrictEqual(readCodexMcp({ homeDir: home, parseTomlImpl: () => { throw new Error('no parser'); } }), []);
 });
 
 test('collect skips non-function readers and swallows reader errors', () => {

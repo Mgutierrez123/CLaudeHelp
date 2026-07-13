@@ -24,10 +24,9 @@ function usage() {
   return [
     'Usage: mcp-inventory [options]',
     '',
-    'Read MCP server configs across every installed harness (Claude Code,',
-    'Codex, OpenCode), normalize them to ecc.mcp.v1, and report which servers',
-    'are configured in more than one harness. Secrets are never printed; only',
-    'env key names are shown.',
+    'Read Claude Code MCP server configs (user- and project-scope), normalize',
+    'them to ecc.mcp.v1, and report which servers are configured in more than',
+    'one scope. Secrets are never printed; only env key names are shown.',
     '',
     'Options:',
     '  --json              Print the full ecc.mcp.v1 inventory as JSON',

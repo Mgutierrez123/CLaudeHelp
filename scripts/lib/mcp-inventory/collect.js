@@ -2,19 +2,16 @@
 
 const { normalizeServerEntry, buildInventory } = require('./canonical-mcp');
 const { readClaudeCodeMcp } = require('./readers/claude-code');
-const { readCodexMcp } = require('./readers/codex');
-const { readOpencodeMcp } = require('./readers/opencode');
 
 const DEFAULT_READERS = Object.freeze({
-  'claude-code': readClaudeCodeMcp,
-  codex: readCodexMcp,
-  opencode: readOpencodeMcp
+  'claude-code': readClaudeCodeMcp
 });
 
-// Collect MCP server configs from every harness reader, normalize each raw
-// entry to ecc.mcp.v1, then merge into a single deduplicated inventory with a
-// fragmentation report. Secrets are stripped during normalization (only env
-// key names survive), so the returned inventory is safe to print or persist.
+// Collect MCP server configs (from Claude Code's user- and project-scope
+// config files), normalize each raw entry to ecc.mcp.v1, then merge into a
+// single deduplicated inventory with a fragmentation report. Secrets are
+// stripped during normalization (only env key names survive), so the
+// returned inventory is safe to print or persist.
 function collectMcpInventory(options = {}) {
   const readers = options.readers || DEFAULT_READERS;
   const readerOptions = options.readerOptions || {};
