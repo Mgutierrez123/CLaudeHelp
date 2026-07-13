@@ -86,7 +86,11 @@ function resolveProjectRoot(cwd = process.cwd()) {
 }
 
 function computeProjectId(projectRoot) {
-  const remoteUrl = stripRemoteCredentials(runGit(['remote', 'get-url', 'origin'], projectRoot));
+  // Use the literal configured value rather than `git remote get-url`, which
+  // applies the user's url.*.insteadOf rewrites (e.g. proxy or SSH->HTTPS
+  // substitutions) and can make otherwise-identical remotes resolve
+  // differently depending on which form (SSH vs HTTPS) was cloned with.
+  const remoteUrl = stripRemoteCredentials(runGit(['config', '--get', 'remote.origin.url'], projectRoot));
   const hashInput = normalizeRemoteUrl(remoteUrl) || remoteUrl || projectRoot;
   return crypto.createHash('sha256').update(hashInput).digest('hex').slice(0, 12);
 }
