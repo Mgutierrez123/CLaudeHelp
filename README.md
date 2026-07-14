@@ -437,7 +437,7 @@ If you stacked methods, clean up in this order:
 /plugin list ecc@ecc
 ```
 
-**That's it!** You now have access to 53 agents, 200 skills, and 92 legacy command shims.
+**That's it!** You now have access to 53 agents, 207 skills, and 92 legacy command shims.
 
 ### Dashboard GUI
 
